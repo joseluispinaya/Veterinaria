@@ -384,6 +384,7 @@
     <Content Include="assets\toastr\toastr.min.js" />
     <Content Include="Imagenes\sinimagen.png" />
     <Content Include="Inicio.aspx" />
+    <Content Include="js\Mapapage.js" />
     <Content Include="js\PageVeterinarias.js" />
     <Content Include="PageVeterinarias.aspx" />
     <Content Include="Web.config" />

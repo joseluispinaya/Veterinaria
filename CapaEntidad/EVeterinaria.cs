@@ -23,5 +23,9 @@ namespace CapaEntidad
         public string FechaRegistro { get; set; }
         public DateTime VFechaRegistro { get; set; }
 
+        public string ImageFullVete => string.IsNullOrEmpty(ImagenLogo)
+            ? $"/Imagenes/sinimagen.png"
+            : ImagenLogo;
+
     }
 }

@@ -1,4 +1,9 @@
 ﻿
+
+//$('#btnModalGeo').on('click', function () {
+//    $("#modalgeorefe").modal("show");
+//})
+
 !function ($) {
     "use strict";
 
@@ -33,8 +38,8 @@
             });
 
             // Asignar latitud y longitud a los inputs
-            document.getElementById("txtlatitud").value = lat;
-            document.getElementById("txtlongitud").value = lng;
+            document.getElementById("txtlatitudModr").value = lat;
+            document.getElementById("txtlongitudModr").value = lng;
         });
 
         return map;
@@ -44,6 +49,7 @@
     GoogleMap.prototype.init = function () {
         var $this = this;
         $(document).on('ready', function () {
+            console.log("Inicializando Google Map...");
             $this.createMarkers('#gmaps-markers'); // Solo para este div
         });
     };
