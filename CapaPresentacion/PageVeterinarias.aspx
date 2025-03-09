@@ -7,6 +7,11 @@
             margin-bottom: 10px !important;
             padding: 20px !important; /* Ajusta el valor de padding según lo necesites */
         }
+        .buttons-excel {
+            color: #fff !important;
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
@@ -55,27 +60,27 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">
                                     <span class="d-block d-sm-none"><i class="fa fa-user"></i></span>
-                                    <span class="d-none d-sm-block">Profile</span>
+                                    <span class="d-none d-sm-block">Registro Veterinaria</span>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="fa fa-home"></i></span>
-                                    <span class="d-none d-sm-block">Home</span>
+                                    <span class="d-none d-sm-block">Lista de Veterinarias</span>
                                 </a>
                             </li>
                             
                             <li class="nav-item">
                                 <a class="nav-link" id="message-tab" data-toggle="tab" href="#message" role="tab" aria-controls="message" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                                    <span class="d-none d-sm-block">Messages</span>
+                                    <span class="d-none d-sm-block">Detalles</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting" aria-selected="false">
                                     <span class="d-block d-sm-none"><i class="fa fa-cog"></i></span>
-                                    <span class="d-none d-sm-block">Settings</span>
+                                    <span class="d-none d-sm-block">Reportes</span>
                                 </a>
                             </li>
                         </ul>
@@ -84,7 +89,7 @@
                                 <input id="txtIdVeterina" name="IdVeterinaria" value="0" type="hidden" />
                                 <h5 class="m-t-0">Registro de Veterinaria</h5>
 
-                                <div class="row">
+                                <div class="row" id="laodvet">
                                     <div class="col-sm-8">
                                         <div class="form-row">
                                             <div class="form-group col-sm-4">
@@ -128,69 +133,75 @@
                                                 <input type="text" class="form-control input-sm model" id="txtDireccion" name="Direccion">
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <a id="txturlubi" href="#" class="text-muted" target="_blank"><i class="fas fa-map-marker-alt m-r-5"></i>No cuenta con ubicacion debe agregar</a>
+                                        </div>
+
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="txtlatitud">Latitud</label>
+                                                <input type="text" class="form-control input-sm" id="txtlatitud" readonly>
+                                            </div>
+
+                                            <div class="form-group m-l-10">
+                                                <label class="sr-only" for="txtlongitud">Longitud</label>
+                                                <input type="text" class="form-control input-sm" id="txtlongitud" readonly>
+                                            </div>
+
+                                            <button type="button" id="btnModalGeo" class="btn btn-sm btn-info m-l-10">
+                                                <i class="fas fa-map-marker-alt"></i> Agregar ubicacion
+                                            </button>
+                                        </div>
+
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="txtApelos">Seleccione Foto</label>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="txtFotoS" accept="image/*">
-                                                <label class="custom-file-label" for="txtFotoS">Ningún archivo seleccionado</label>
+                                                <input type="file" class="custom-file-input" id="txtFotoV" accept="image/*">
+                                                <label class="custom-file-label" for="txtFotoV">Ningún archivo seleccionado</label>
                                             </div>
                                         </div>
                                         <div class="form-group text-center">
-                                            <img id="imgUsuarioM" src="Imagenes/sinimagen.png" alt="Foto usuario" style="height: 120px; max-width: 120px; border-radius: 50%;">
+                                            <img id="imgLogoVet" src="Imagenes/sinimagen.png" alt="Foto usuario" style="height: 120px; max-width: 120px; border-radius: 50%;">
                                         </div>
-                                        <%--<div class="form-row h-100 d-flex align-items-center justify-content-center">
-                                            <div class="form-group col-sm-12 text-center">
-                                                <img id="imgUsuarioM" src="Imagenes/sinimagen.png" alt="Foto usuario"
-                                                    style="height: 120px; max-width: 120px; border-radius: 50%;">
-                                            </div>
-                                        </div>--%>
+
+                                        <div class="form-group text-center m-t-30">
+                                            <button type="button" id="btnGuardarVet" class="btn btn-sm btn-success">
+                                                <i class="fas fa-pencil-alt"></i> Guardar
+                                            </button>
+
+                                            <button type="button" id="btnNuevoVet" class="btn btn-sm btn-danger m-l-10">
+                                                <i class="fas fa-edit"></i> Nuevo
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-inline">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="txtlatitud">Latitud</label>
-                                        <input type="text" class="form-control input-sm" id="txtlatitud" readonly>
-                                    </div>
-
-                                    <div class="form-group m-l-10">
-                                        <label class="sr-only" for="txtlongitud">Longitud</label>
-                                        <input type="text" class="form-control input-sm" id="txtlongitud" readonly>
-                                    </div>
-
-                                    <button type="button" id="btnModalGeo" class="btn btn-sm btn-info m-l-10">
-                                        <i class="fas fa-map-marker-alt"></i> Agregar ubicacion
-                                    </button>
-                                </div>
-
                             </div>
                             
                             <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="form-group text-center">
+                                    <h5 class="m-t-0"><i class="fas fa-hospital-alt"></i> Lista de Veterinarias</h5>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="m-t-0 m-b-30">Markers</h4>
-                                                <div id="mapa" class="gmaps"></div>
-
-                                                <div class="row m-t-30">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="txtlatitudModr">Latitud</label>
-                                                            <input type="text" class="form-control input-sm" id="txtlatitudModr" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="txtlongitudModr">Longitud</label>
-                                                            <input type="text" class="form-control input-sm" id="txtlongitudModr" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table id="tbVeterina" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Foto</th>
+                                                    <th>Nombre</th>
+                                                    <th>Propietario</th>
+                                                    <th>Correo</th>
+                                                    <th>Contacto</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -222,55 +233,25 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="m-t-0 m-b-30">Markers</h4>
-                                    <%--<div id="gmaps-markersee" class="gmaps"></div>--%>
+                            <h4 class="m-t-0 m-b-15">Seleccione su Ubicacion</h4>
+                            <div id="mapa" class="gmaps"></div>
 
-                                    <div class="row m-t-30">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="txtlatitudMod">Latitud</label>
-                                                <input type="text" class="form-control input-sm" id="txtlatitudMod" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="txtlongitudMod">Longitud</label>
-                                                <input type="text" class="form-control input-sm" id="txtlongitudMod" readonly>
-                                            </div>
-                                        </div>
+                            <div class="row m-t-15">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="txtlatitudMod">Latitud</label>
+                                        <input type="text" class="form-control input-sm" id="txtlatitudMod" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="txtlongitudMod">Longitud</label>
+                                        <input type="text" class="form-control input-sm" id="txtlongitudMod" readonly>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <%--<h4 class="m-t-0">Markers</h4>
-                    <div class="form-horizontal m-b-30">
-                        <div class="form-group row">
-                            <label class="col-sm-4 control-label" for="txtubicacionvet">Seleccione su Ubucacion</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control input-sm" id="txtubicacionvet">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="gmaps-markers" class="gmaps"></div>
-
-                    <div class="row m-t-30">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="txtlatitud">Latitud</label>
-                                <input type="text" class="form-control input-sm" id="txtlatitudMod" readonly>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="txtlongitud">Longitud</label>
-                                <input type="text" class="form-control input-sm" id="txtlongitudMod" readonly>
-                            </div>
-                        </div>
-                    </div>--%>
 
                 </div>
                 <div class="modal-footer">
@@ -284,38 +265,16 @@
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
 
-    <%--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtSAR45TFgZjOs4nBFFZnII-6mMHLfSYI"></script>
+    <script src="js/PageVeterinarias.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>
 
-    <script>
-        function loadGMaps() {
-            if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
-                var script = document.createElement("script");
-                script.src = "assets/plugins/gmaps/gmaps.min.js";
-                script.onload = function () {
-                    console.log("GMaps cargado");
-                    loadPageVeterinarias();
-                };
-                document.body.appendChild(script);
-            } else {
-                console.error("Google Maps API no se ha cargado correctamente.");
-            }
-        }
-
-        function loadPageVeterinarias() {
-            var script = document.createElement("script");
-            script.src = "js/PageVeterinarias.js";
-            document.body.appendChild(script);
-        }
-
-        window.onload = function () {
-            loadGMaps();
-        };
+    <%--<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap&libraries=places">
     </script>--%>
 
-    <script src="js/Mapapage.js" type="text/javascript"></script>
+    <%--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>--%>
+    <%--<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&libraries=places&callback=initMap"></script>--%>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>
-    <%--<script async defer src="https://maps.google.com/maps/api/js?key=AIzaSyCtSAR45TFgZjOs4nBFFZnII-6mMHLfSYI"></script>--%>
     
     <%--<script src="assets/plugins/gmaps/gmaps.min.js"></script>--%>
     

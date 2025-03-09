@@ -51,6 +51,7 @@
     <Compile Include="EUsuario.cs" />
     <Compile Include="EVeterinaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Respuesta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
