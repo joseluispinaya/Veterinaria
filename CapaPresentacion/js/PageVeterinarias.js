@@ -363,7 +363,6 @@ $('#btnGuardarVet').on('click', function () {
 
     if (parseInt($("#txtIdVeterina").val()) === 0) {
         //swal("Mensaje", "Guardado.", "success")
-        //registerDataAjax();
         registerDataAjax();
     } else {
         swal("Mensaje", "Falta para Actualizar personal.", "warning")

@@ -383,9 +383,15 @@
     <Content Include="assets\toastr\toastr.min.css" />
     <Content Include="assets\toastr\toastr.min.js" />
     <Content Include="Imagenes\sinimagen.png" />
+    <Content Include="Imgusers\logomas.png" />
     <Content Include="Inicio.aspx" />
+    <Content Include="js\Login.js" />
     <Content Include="js\Mapapage.js" />
+    <Content Include="js\Masterp.js" />
+    <Content Include="js\PageUsuarios.js" />
     <Content Include="js\PageVeterinarias.js" />
+    <Content Include="Login.aspx" />
+    <Content Include="PageUsuarios.aspx" />
     <Content Include="PageVeterinarias.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -403,6 +409,20 @@
     </Compile>
     <Compile Include="Inicio.aspx.designer.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageUsuarios.aspx.cs">
+      <DependentUpon>PageUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageUsuarios.aspx.designer.cs">
+      <DependentUpon>PageUsuarios.aspx</DependentUpon>
     </Compile>
     <Compile Include="PageVeterinarias.aspx.cs">
       <DependentUpon>PageVeterinarias.aspx</DependentUpon>

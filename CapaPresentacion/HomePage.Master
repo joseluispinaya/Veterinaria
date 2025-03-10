@@ -41,7 +41,7 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="Inicio.aspx" class="logo"><span>Itsa</span> Rib</a>
+                        <a href="Inicio.aspx" class="logo"><span>Masc</span>otas</a>
                         <a href="Inicio.aspx" class="logo-sm"><span>J</span></a>
 
                     </div>
@@ -129,7 +129,7 @@
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-key"></i><span>Usuarios </span><span class="float-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="FrmUsuarios.aspx">Usuarios</a></li>
+                                    <li><a href="PageUsuarios.aspx">Usuarios</a></li>
                                 </ul>
                             </li>
 
@@ -249,7 +249,7 @@
 
         <script src="assets/js/app.js"></script>
         <!-- <script src="assets/plugins/loadingoverlay/loadingoverlay.js"></script> -->
-        <!-- <script src="js/menuMaster.js" type="text/javascript"></script> -->
+        <script src="js/Masterp.js" type="text/javascript"></script>
         <asp:ContentPlaceHolder ID="footer" runat="server"></asp:ContentPlaceHolder>
     </body>
 </html>

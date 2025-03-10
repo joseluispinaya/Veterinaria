@@ -19,6 +19,8 @@ namespace CapaEntidad
         public int IdRol { get; set; }
         public string Token { get; set; }
         public bool Activo { get; set; }
+        public string FechaRegistro { get; set; }
+        public DateTime VFechaRegistro { get; set; }
         public EVeterinaria Veterinaria { get; set; }
         public ERol Rol { get; set; }
         public string ImageFull => string.IsNullOrEmpty(Foto)

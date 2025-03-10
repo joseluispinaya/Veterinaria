@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NUsuario.cs" />
     <Compile Include="NVeterinaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
