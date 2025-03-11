@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexionBD.cs" />
+    <Compile Include="DPropietario.cs" />
+    <Compile Include="DTiposGeneral.cs" />
     <Compile Include="DUsuario.cs" />
     <Compile Include="DVeterinaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

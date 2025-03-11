@@ -17,5 +17,7 @@ namespace CapaEntidad
         public bool Activo { get; set; }
         public string FechaRegistro { get; set; }
         public DateTime VFechaRegistro { get; set; }
+        public List<EMascota> ListaMascota { get; set; }
+        public int NumeroMascotas => ListaMascota == null ? 0 : ListaMascota.Count;
     }
 }
