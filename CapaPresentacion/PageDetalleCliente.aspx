@@ -1,48 +1,62 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageDetalleCliente.aspx.cs" Inherits="CapaPresentacion.PageDetalleCliente" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="assets/inpfile.css" rel="stylesheet"/>
+    <style>
+        .sin-margin-bottom {
+            margin-bottom: 0;
+        }
+        .titull {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     Panel Detalle Cliente
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="server">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 text-right">
-                            <button type="button" id="btnVolver" class="btn btn-sm btn-success">
-                                <i class="fas fa-arrow-circle-right"></i> Volver
-                            </button>
-                            <button type="button" id="btnNuev" class="btn btn-sm btn-danger">
-                                <i class="fas fa-user-plus"></i> Nuevo Registro
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
+    <div class="row" id="loaddet">
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body user-card">
                     <div class="media-main">
                         <a class="float-left" href="#">
-                            <img class="thumb-lg rounded-circle" src="assets/images/users/avatar-2.jpg" alt="">
+                            <img class="thumb-lg rounded-circle" src="Imgusers/logomas.png" alt="">
                         </a>
                         <div class="info pl-3">
-                            <h4 class="mt-3">Pauline I. Bird</h4>
-                            <p class="text-muted">Family Member</p>
+                            <h4 id="texnomn" class="mt-3">Pauline I. Bird</h4>
+                            <p id="texapelli" class="text-muted">Family Member</p>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-
-                    <p class="text-muted info-text">
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                    <input id="txtIdclienSt" value="0" type="hidden" />
+                    <input id="txtIdclien" name="IdPropietario" value="0" type="hidden" />
+                    <p class="titull">
+                        Detalle del Cliente
                     </p>
-                    <hr>
+                    <strong>Nro CI :</strong>
+                    <label class="sin-margin-bottom" id="lblcip">73999544</label><br>
+                    <strong>Nro Contacto :</strong>
+                    <label class="sin-margin-bottom" id="lblnrocel">73999544</label><br>
+                    <strong>Direccion :</strong>
+                    <p id="texdirec" class="text-muted">
+                        Direccion cliente
+                    </p>
+                    <%--<hr>--%>
+                    <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <button type="button" id="btnxNuevpp" class="btn btn-sm btn-success">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button type="button" id="btnNewMasco" class="btn btn-sm btn-primary">
+                            <i class="fas fa-paw"></i> + Mascota
+                        </button>
+                        <button type="button" id="btnVolverr" class="btn btn-sm btn-danger">
+                            <i class="fas fa-arrow-circle-right"></i> Volver
+                        </button>
+                    </div>
+                </div>
                 </div>
                 <!-- card-body -->
             </div>
@@ -50,7 +64,7 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="m-b-30 m-t-0">Mascotas</h4>
+                    <h4 class="m-b-15 m-t-0">Mascotas</h4>
                     <table id="tbMascode" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -66,6 +80,93 @@
                         <tbody>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" id="modalregmasco" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title m-0" id="myLargeModalLabel">Mascota</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <input id="txtIdMascota" name="IdMascota" value="0" type="hidden" />
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="form-row">
+                                <div class="form-group col-sm-4">
+                                    <label for="txtNombre">Nombre</label>
+                                    <input type="text" class="form-control input-sm model" id="txtNombre" name="Nombres">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="txtRaza">Raza</label>
+                                    <input type="text" class="form-control input-sm model" id="txtRaza" name="Raza">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="cboSexo">Sexo</label>
+                                    <select class="form-control form-control-sm" id="cboSexo">
+                                        <option value="1">Macho</option>
+                                        <option value="0">Hembra</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <%--<div class="form-group col-sm-4">
+                                    <label>Nacido en</label>
+                                    <div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" id="txtnacido">
+                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>--%>
+                                <div class="form-group col-sm-4">
+                                    <label for="txtnacido">Nacido en</label>
+                                    <input type="text" class="form-control input-sm" id="txtnacido">
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <label for="cboTipomas">Tipo Mascota</label>
+                                    <select class="form-control form-control-sm" id="cboTipomas">
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="cboEstado">Estado</label>
+                                    <select class="form-control form-control-sm" id="cboEstado">
+                                        <option value="1">Activo</option>
+                                        <option value="0">No Activo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-4">
+                                    <label for="txtComentario">Comentario</label>
+                                    <input type="text" class="form-control model" id="txtComentario" name="Comentario">
+                                </div>
+                                <div class="form-group col-sm-8">
+                                    <label for="txtApelocsa">Seleccione Imagen</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="txtFotoMa" accept="image/*">
+                                        <label class="custom-file-label" for="txtFotoMa">Ningún archivo seleccionado</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-row h-100 d-flex align-items-center justify-content-center">
+                                <div class="form-group col-sm-12 text-center">
+                                    <img id="imgMascoReg" src="Imagenes/sinimagen.png" alt="Foto usuario"
+                                        style="height: 120px; max-width: 120px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button id="btnGuardarCambiosM" type="button" class="btn btn-sm btn-primary">Guardar Cambios</button>
                 </div>
             </div>
         </div>
