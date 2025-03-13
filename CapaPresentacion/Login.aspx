@@ -38,13 +38,13 @@
 
                         <div class="form-group">
                             <div class="col-12">
-                                <input class="form-control" id="username" type="text" required="" placeholder="Ingrese Correro">
+                                <input class="form-control" id="username" type="text" value="pepito@yopmail.com" placeholder="Ingrese Correro">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-12">
-                                <input class="form-control" id="password" type="password" required="" placeholder="Contraseña">
+                                <input class="form-control" id="password" type="password" value="803665" placeholder="Contraseña">
                             </div>
                         </div>
 

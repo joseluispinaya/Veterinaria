@@ -28,5 +28,6 @@ namespace CapaEntidad
         public string ImageFulP => string.IsNullOrEmpty(ImagenProdu)
             ? $"/Imagenes/sinimagen.png"
             : ImagenProdu;
+        public string MontoCadena => $"Bs/ {Precio:F2}";
     }
 }

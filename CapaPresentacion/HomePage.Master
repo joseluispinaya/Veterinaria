@@ -73,9 +73,9 @@
                                 <a href="#" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
                                     <img src="assets/images/users/avatar-1.jpg" alt="user-img" id="imgUsuarioMe" class="rounded-circle">
                                     <span class="profile-username">
-                                        <strong id="nombreusuariome">Nombre</strong>
+                                        <strong id="nombreusuariome"></strong>
                                         <br />
-                                        <small id="rolusuariome">Rol user</small>
+                                        <small id="rolusuariome"></small>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -142,9 +142,10 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-square-inc-cash"></i><span> Activos </span><span class="float-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-square-inc-cash"></i><span> Almacen </span><span class="float-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="FrmActivo.aspx">Nuevo Registro</a></li>
+                                    <li><a href="PageListaProducto.aspx">Lista Productos</a></li>
+                                    <li><a href="PageAddProducto.aspx">Nuevo Producto</a></li>
                                 </ul>
                             </li>
                             <li class="has_sub">

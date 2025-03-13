@@ -27,5 +27,10 @@ namespace CapaNegocio
         {
             return DTiposGeneral.GetInstance().ListaTipoMascota();
         }
+
+        public Respuesta<List<ECategoria>> ListaCategorias()
+        {
+            return DTiposGeneral.GetInstance().ListaCategorias();
+        }
     }
 }

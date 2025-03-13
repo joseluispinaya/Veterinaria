@@ -389,13 +389,17 @@
     <Content Include="js\Login.js" />
     <Content Include="js\Mapapage.js" />
     <Content Include="js\Masterp.js" />
+    <Content Include="js\PageAddProducto.js" />
     <Content Include="js\PageClientes.js" />
     <Content Include="js\PageDetalleCliente.js" />
+    <Content Include="js\PageListaProducto.js" />
     <Content Include="js\PageUsuarios.js" />
     <Content Include="js\PageVeterinarias.js" />
     <Content Include="Login.aspx" />
+    <Content Include="PageAddProducto.aspx" />
     <Content Include="PageClientes.aspx" />
     <Content Include="PageDetalleCliente.aspx" />
+    <Content Include="PageListaProducto.aspx" />
     <Content Include="PageUsuarios.aspx" />
     <Content Include="PageVeterinarias.aspx" />
     <Content Include="Web.config" />
@@ -422,6 +426,13 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PageAddProducto.aspx.cs">
+      <DependentUpon>PageAddProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageAddProducto.aspx.designer.cs">
+      <DependentUpon>PageAddProducto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PageClientes.aspx.cs">
       <DependentUpon>PageClientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -435,6 +446,13 @@
     </Compile>
     <Compile Include="PageDetalleCliente.aspx.designer.cs">
       <DependentUpon>PageDetalleCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageListaProducto.aspx.cs">
+      <DependentUpon>PageListaProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageListaProducto.aspx.designer.cs">
+      <DependentUpon>PageListaProducto.aspx</DependentUpon>
     </Compile>
     <Compile Include="PageUsuarios.aspx.cs">
       <DependentUpon>PageUsuarios.aspx</DependentUpon>

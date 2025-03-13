@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using CapaEntidad;
 
+
 namespace CapaDatos
 {
     public class DTiposGeneral
@@ -65,6 +66,50 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 return new Respuesta<List<ETipoMascota>>()
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public Respuesta<List<ECategoria>> ListaCategorias()
+        {
+            try
+            {
+                List<ECategoria> rptListaRol = new List<ECategoria>();
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_ObtenerCategorias", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                rptListaRol.Add(new ECategoria()
+                                {
+                                    IdCategoria = Convert.ToInt32(dr["IdCategoria"]),
+                                    Descripcion = dr["Descripcion"].ToString(),
+                                    Activo = Convert.ToBoolean(dr["Activo"])
+                                });
+                            }
+                        }
+                    }
+                }
+                return new Respuesta<List<ECategoria>>()
+                {
+                    Estado = true,
+                    Data = rptListaRol,
+                    Mensaje = "Categorias obtenidos correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<List<ECategoria>>()
                 {
                     Estado = false,
                     Mensaje = "Ocurrió un error: " + ex.Message,

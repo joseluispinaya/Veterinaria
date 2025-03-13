@@ -156,7 +156,8 @@ function actualizarTablaMascotas(mascotasList) {
                     return data === "H" ? "Hembra" : "Macho";
                 }
             },
-            { data: "FechaNacimiento" },
+            //{ data: "FechaNacimiento" },
+            { data: "Edad" },
             {
                 data: "Activo",
                 render: function (data) {
@@ -215,14 +216,15 @@ function mostrarModal(modelo, cboEstadoDeshabilitado = true) {
         "txtIdMascota": modelo.IdMascota,
         "txtNombre": modelo.Nombre,
         "txtRaza": modelo.Raza,
-        "txtnacido": modelo.FechaNacimiento,
+        //"txtnacido": modelo.FechaNacimiento,
+        "txtnacido": modelo.FechaNacimiento === "" ? ObtenerFecha() : modelo.FechaNacimiento,
         "txtIdclien": modelo.IdPropietario,
         "txtComentario": modelo.Comentario,
         "cboSexo": modelo.Genero === "M" ? 1 : 0,
         "cboTipomas": modelo.IdTipoMascota || $("#cboTipomas option:first").val(),
         "cboEstado": modelo.Activo ? 1 : 0,
     };
-    //$("#txtFechap").val(modelo.FechaTransacadena == "" ? ObtenerFecha() : modelo.FechaTransacadena);
+    //$("#txtnacido").val(modelo.FechaNacimiento == "" ? ObtenerFecha() : modelo.FechaNacimiento);
 
     Object.entries(campos).forEach(([id, valor]) => $("#" + id).val(valor));
 

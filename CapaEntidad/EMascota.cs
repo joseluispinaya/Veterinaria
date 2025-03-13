@@ -26,5 +26,43 @@ namespace CapaEntidad
         public string ImageFulMa => string.IsNullOrEmpty(ImagenMascota)
             ? $"/Imagenes/sinimagen.png"
             : ImagenMascota;
+
+        public string Edad
+        {
+            get
+            {
+                var diff = DateTime.Now.Subtract(VFechaNacimiento);
+                var days = diff.Days;
+
+                if (days < 30)
+                    return days + " dias";
+                else if (days >= 30 && days <= 31)
+                    return "1 mes";
+                else if (days < 365)
+                    return Math.Floor(diff.TotalDays / 30) + " meses";
+                else if (days == 365)
+                    return "1 Año";
+                else
+                    return Math.Floor(diff.TotalDays / 365) + " Años";
+            }
+        }
+
+
+        //public string Edad
+        //{
+        //    get
+        //    {
+        //        var diff = DateTime.Now.Subtract(VFechaNacimiento);
+        //        var days = diff.Days;
+        //        return days switch
+        //        {
+        //            < 30 => days + " dias",
+        //            >= 30 and <= 31 => "1 mes",
+        //            < 365 => Math.Floor(diff.TotalDays / 30) + " meses",
+        //            365 => "1 Año",
+        //            _ => Math.Floor(diff.TotalDays / 365) + " Años"
+        //        };
+        //    }
+        //}
     }
 }

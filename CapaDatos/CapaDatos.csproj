@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ConexionBD.cs" />
     <Compile Include="DMascota.cs" />
+    <Compile Include="DProducto.cs" />
     <Compile Include="DPropietario.cs" />
     <Compile Include="DTiposGeneral.cs" />
     <Compile Include="DUsuario.cs" />
