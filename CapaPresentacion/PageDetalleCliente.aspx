@@ -72,7 +72,7 @@
                                 <th>Nombres</th>
                                 <th>Raza</th>
                                 <th>Genero</th>
-                                <th>Nacido</th>
+                                <th>Edad</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>

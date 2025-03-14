@@ -8,9 +8,9 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="server">
     <div class="row">
     <div class="col-lg-12">
-        <div class="card">
+        <div class="card" id="loadp">
             <div class="card-header bg-primary py-2 px-4">
-                <h3 class="card-title m-0"><i class="fas fa-bars"></i> Llene los datos del productos</h3>
+                <h3 class="card-title m-0"><i class="fas fa-edit"></i> Llene los datos del productos</h3>
             </div>
             <div class="card-body">
                 <input id="txtIdProduc" name="IdProducto" value="0" type="hidden" />
@@ -19,7 +19,7 @@
                         <div class="form-row">
                             <div class="form-group col-sm-4">
                                 <label for="txtNombre">Nombre</label>
-                                <input type="text" class="form-control input-sm model" id="txtNombres" name="Nombres">
+                                <input type="text" class="form-control input-sm model" id="txtNombre" name="Nombre">
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="txtMarca">Marca</label>
@@ -39,11 +39,11 @@
                             </div>
                             <div class="form-group col-sm-3">
                                 <label for="txtStock">Stock</label>
-                                <input type="text" class="form-control input-sm model" id="txtStock" name="Stock">
+                                <input type="text" class="form-control input-sm model" id="txtStock" value="0" name="Stock">
                             </div>
                             <div class="form-group col-sm-3">
                                 <label for="txtPrecio">Precio</label>
-                                <input type="text" class="form-control input-sm model" id="txtPrecio" name="Precio">
+                                <input type="text" class="form-control input-sm model" id="txtPrecio" value="0" name="Precio">
                             </div>
                             <div class="form-group col-sm-3">
                                 <label for="cboEstado">Estado</label>
@@ -71,7 +71,7 @@
                     <div class="col-lg-4">
                         <div class="form-group text-center">
                             <label for="imgProd">Imagen del producto</label><br />
-                            <img id="imgProd" src="Imagenes/sinimagen.png" alt="Foto usuario"
+                            <img id="imgProd" src="Imageprodu/sinimagenpro.png" alt="Foto usuario"
                                 style="height: 120px; max-width: 120px;">
                         </div>
 
@@ -79,8 +79,8 @@
                             <button type="button" id="btnGuardarPro" class="btn btn-sm btn-success">
                                 <i class="fas fa-pencil-alt"></i> Guardar
                             </button>
-                            <button type="button" id="btnCancelarp" class="btn btn-sm btn-danger m-l-10">
-                                <i class="fas fa-edit"></i> Cancelar
+                            <button type="button" id="btnIrlista" class="btn btn-sm btn-warning m-l-10">
+                                <i class="fas fa-bars"></i> Ir a Lista
                             </button>
                         </div>
                     </div>

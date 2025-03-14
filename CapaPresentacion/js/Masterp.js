@@ -4,7 +4,7 @@
 $(document).ready(function () {
     const tokenSesion = sessionStorage.getItem('tokenSesion');
     const usuarioL = sessionStorage.getItem('usuarioSt');
-    console.log(usuarioL);
+    //console.log(usuarioL);
 
     if (tokenSesion && usuarioL) {
         var usuParaenviar = JSON.parse(usuarioL);

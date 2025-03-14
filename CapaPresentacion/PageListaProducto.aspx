@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageListaProducto.aspx.cs" Inherits="CapaPresentacion.PageListaProducto" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="assets/inpfile.css" rel="stylesheet"/>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     Lista de Productos
@@ -34,6 +35,86 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" id="modalregprodd" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title m-0" id="myLargeModalLabel">Actualizar producto</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <input id="txtIdProduc" name="IdProducto" value="0" type="hidden" />
+                    <input id="txtIdVeteac" name="IdVeterinaria" value="0" type="hidden" />
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="txtNombre">Nombre</label>
+                                    <input type="text" class="form-control input-sm model" id="txtNombre" name="Nombre">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="txtMarca">Marca</label>
+                                    <input type="text" class="form-control input-sm model" id="txtMarca" name="Marca">
+                                </div>
+                                
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-8">
+                                    <label for="cboCatego">Categoria</label>
+                                    <select class="form-control form-control-sm" id="cboCatego">
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="cboEstado">Estado</label>
+                                    <select class="form-control form-control-sm" id="cboEstado">
+                                        <option value="1">Activo</option>
+                                        <option value="0">No Activo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="txtStock">Stock</label>
+                                        <input type="text" class="form-control input-sm model" id="txtStock" value="0" name="Stock">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtPrecio">Precio</label>
+                                        <input type="text" class="form-control input-sm model" id="txtPrecio" value="0" name="Precio">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <label for="txtDescripcion">Descripcion</label>
+                                        <textarea class="form-control" rows="4" id="txtDescripcion"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label for="txtApelocs">Seleccione Foto</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="txtFotoPror" accept="image/*">
+                                    <label class="custom-file-label" for="txtFotoPror">Ningún archivo seleccionado</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <img id="imgProd" src="Imageprodu/sinimagenpro.png" alt="Foto usuario" style="height: 120px; max-width: 120px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button id="btnGuardarPro" type="button" class="btn btn-sm btn-primary">Guardar Cambios</button>
                 </div>
             </div>
         </div>

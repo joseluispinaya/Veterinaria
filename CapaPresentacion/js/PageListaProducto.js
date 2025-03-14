@@ -3,7 +3,34 @@ var table;
 
 $(document).ready(function () {
     listaProductos();
+    cargarCategorias();
 })
+
+function cargarCategorias() {
+    $("#cboCatego").html("");
+
+    $.ajax({
+        type: "POST",
+        url: "PageAddProducto.aspx/ListaCategorias",
+        data: {},
+        contentType: 'application/json; charset=utf-8',
+        dataType: "json",
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        success: function (response) {
+            if (response.d.Estado) {
+                $.each(response.d.Data, function (i, row) {
+                    if (row.Activo === true) {
+                        $("<option>").attr({ "value": row.IdCategoria }).text(row.Descripcion).appendTo("#cboCatego");
+                    }
+
+                })
+            }
+
+        }
+    });
+}
 
 function listaProductos() {
     if ($.fn.DataTable.isDataTable("#tbProductos")) {
@@ -80,3 +107,175 @@ function listaProductos() {
         }
     });
 }
+
+function mostrarImagenSeleccionadaP(input) {
+    let file = input.files[0];
+    let reader = new FileReader();
+
+    reader.onload = (e) => $('#imgProd').attr('src', e.target.result);
+    file ? reader.readAsDataURL(file) : $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+
+    let fileName = file ? file.name : 'Ningún archivo seleccionado';
+    $(input).next('.custom-file-label').text(fileName);
+}
+
+$('#txtFotoPror').change(function () {
+    mostrarImagenSeleccionadaP(this);
+});
+
+$("#tbProductos tbody").on("click", ".btn-editar", function (e) {
+    e.preventDefault();
+    let filaSeleccionada;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const model = table.row(filaSeleccionada).data();
+    $("#txtIdProduc").val(model.IdProducto);
+    $("#txtMarca").val(model.Marca);
+    $("#txtNombre").val(model.Nombre);
+    $("#txtDescripcion").val(model.Descripcion);
+    $("#cboCatego").val(model.IdCategoria);
+    $("#txtIdVeteac").val(model.IdVeterinaria);
+    $("#txtStock").val(model.Stock);
+    $("#txtPrecio").val(model.Precio);
+    $("#cboEstado").val(model.Activo ? 1 : 0);
+    $("#imgProd").attr("src", model.ImageFulP);
+
+    $("#txtFotoPror").val("");
+    $(".custom-file-label").text('Ningún archivo seleccionado');
+
+    $("#modalregprodd").modal("show");
+    //mostrarModal(model, false);
+})
+
+function sendDataToServerActuProd(request) {
+    $.ajax({
+        type: "POST",
+        url: "PageListaProducto.aspx/Actualizar",
+        data: JSON.stringify(request),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            $(".modal-content").LoadingOverlay("show");
+        },
+        success: function (response) {
+            $(".modal-content").LoadingOverlay("hide");
+            if (response.d.Estado) {
+                listaProductos();
+                $('#modalregprodd').modal('hide');
+
+                swal("Mensaje", response.d.Mensaje, "success");
+            } else {
+                swal("Mensaje", response.d.Mensaje, "warning");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $(".modal-content").LoadingOverlay("hide");
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        complete: function () {
+            // Rehabilitar el botón después de que la llamada AJAX se complete (éxito o error)
+            $('#btnGuardarPro').prop('disabled', false);
+        }
+    });
+}
+
+function actualizarDataProduc() {
+    var fileInput = document.getElementById('txtFotoPror');
+    var file = fileInput.files[0];
+
+    const modelo = {
+        IdProducto: parseInt($("#txtIdProduc").val()),
+        Marca: $("#txtMarca").val().trim(),
+        Nombre: $("#txtNombre").val().trim(),
+        Descripcion: $("#txtDescripcion").val().trim(),
+        IdCategoria: $("#cboCatego").val(),
+        IdVeterinaria: parseInt($("#txtIdVeteac").val()),
+        Stock: parseInt($("#txtStock").val().trim()),
+        Precio: parseFloat($("#txtPrecio").val().trim()),
+        Activo: ($("#cboEstado").val() == "1" ? true : false)
+    }
+
+    if (file) {
+
+        var maxSize = 2 * 1024 * 1024; // 2 MB en bytes
+        if (file.size > maxSize) {
+            swal("Mensaje", "La imagen seleccionada es demasiado grande max 1.5 Mb.", "warning");
+            // Rehabilitar el botón si hay un error de validación
+            $('#btnGuardarPro').prop('disabled', false);
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var arrayBuffer = e.target.result;
+            var bytes = new Uint8Array(arrayBuffer);
+
+            var request = {
+                oProduc: modelo,
+                imageBytes: Array.from(bytes)
+            };
+
+            sendDataToServerActuProd(request);
+        };
+
+        reader.readAsArrayBuffer(file);
+    } else {
+        // Si no se selecciona ningún archivo, envía un valor nulo o vacío para imageBytes
+        var request = {
+            oProduc: modelo,
+            imageBytes: null // o cualquier otro valor que indique que no se envió ningún archivo
+        };
+
+        sendDataToServerActuProd(request);
+    }
+}
+
+$('#btnGuardarPro').on('click', function () {
+    // Deshabilitar el botón para evitar múltiples envíos
+    $('#btnGuardarPro').prop('disabled', true);
+
+    const inputs = $("input.model").serializeArray();
+    const inputs_sin_valor = inputs.filter((item) => item.value.trim() == "");
+
+    if (inputs_sin_valor.length > 0) {
+        const mensaje = `Debe completar el campo : "${inputs_sin_valor[0].name}"`;
+        toastr.warning("", mensaje);
+        $(`input[name="${inputs_sin_valor[0].name}"]`).focus();
+        $('#btnGuardarPro').prop('disabled', false);
+        return;
+    }
+
+    var cantidadStr = $("#txtStock").val().trim();
+
+    // Verificar si la cantidad es un número válido, no vacío, mayor que 0
+    if (cantidadStr === "" || isNaN(cantidadStr) || parseInt(cantidadStr) <= 0) {
+        toastr.warning("", "Debe ingresar una cantidad válida (mayor a 0)");
+        $("#txtStock").focus();
+        $('#btnGuardarPro').prop('disabled', false);
+        return;
+    }
+
+    var precioStr = $("#txtPrecio").val().trim();
+
+    // Verificar si el precio es un número válido, no vacío, y mayor que 0
+    if (precioStr === "" || isNaN(precioStr) || parseFloat(precioStr) <= 0) {
+        toastr.warning("", "Debe ingresar un monto válido (mayor a 0)");
+        $("#txtPrecio").focus();
+        $('#btnGuardarPro').prop('disabled', false);
+        return;
+    }
+
+    if (parseInt($("#txtIdProduc").val()) === 0) {
+        swal("Mensaje", "Seleccione nuevamente el Producto a editar.", "warning")
+        $('#btnGuardarPro').prop('disabled', false);
+        return;
+    }
+
+    actualizarDataProduc();
+});
