@@ -117,5 +117,49 @@ namespace CapaDatos
                 };
             }
         }
+
+        public Respuesta<List<EServicio>> ListaServicios()
+        {
+            try
+            {
+                List<EServicio> rptListaRol = new List<EServicio>();
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_ObtenerServicios", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                rptListaRol.Add(new EServicio()
+                                {
+                                    Idservicio = Convert.ToInt32(dr["Idservicio"]),
+                                    Servicio = dr["Servicio"].ToString(),
+                                    Activo = Convert.ToBoolean(dr["Activo"])
+                                });
+                            }
+                        }
+                    }
+                }
+                return new Respuesta<List<EServicio>>()
+                {
+                    Estado = true,
+                    Data = rptListaRol,
+                    Mensaje = "Servicios obtenidos correctamente"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<List<EServicio>>()
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
     }
 }

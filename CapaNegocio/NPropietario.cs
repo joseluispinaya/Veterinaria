@@ -58,6 +58,11 @@ namespace CapaNegocio
             return DPropietario.GetInstance().PropietarioIdMascotasTo(Idpropi);
         }
 
+        public Respuesta<EPropietario> PropietarioIdMascotasToHisto(int Idpropi)
+        {
+            return DPropietario.GetInstance().PropietarioIdMascotasToHisto(Idpropi);
+        }
+
         public Respuesta<EPropietario> PropietarioId(int Idpropi)
         {
             return DPropietario.GetInstance().PropietarioId(Idpropi);

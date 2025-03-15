@@ -97,7 +97,7 @@ function cargarDatos(idProp) {
 
     $.ajax({
         type: "POST",
-        url: "PageDetalleCliente.aspx/DetalleCliente",
+        url: "PageDetalleCliente.aspx/DetalleClientePrueba",
         data: JSON.stringify(request),
         dataType: "json",
         contentType: 'application/json; charset=utf-8',
@@ -117,8 +117,10 @@ function cargarDatos(idProp) {
                 $("#lblcip").text(datos.NroCi);
                 $("#lblnrocel").text(datos.Celular);
                 $("#texdirec").text(datos.Direccion);
+                $("#lblnromasco").text(datos.NumeroMascotas + " Masc.");
 
                 var mascotasList = datos.ListaMascota;
+                console.log(mascotasList);
                 actualizarTablaMascotas(mascotasList);
 
             } else {
@@ -148,7 +150,17 @@ function actualizarTablaMascotas(mascotasList) {
         data: mascotasList,
         columns: [
             { data: "IdMascota", visible: false, searchable: false },
+            {
+                data: "ImageFulMa",
+                render: function (data) {
+                    return `<img style="height:40px" src="${data}" class="rounded mx-auto d-block"/>`;
+                },
+                orderable: false,
+                searchable: false,
+                width: "50px"
+            },
             { data: "Nombre" },
+            { data: "TipoMascota.Descripcion" },
             { data: "Raza" },
             {
                 data: "Genero",
@@ -156,8 +168,9 @@ function actualizarTablaMascotas(mascotasList) {
                     return data === "H" ? "Hembra" : "Macho";
                 }
             },
-            //{ data: "FechaNacimiento" },
+            //{ data: "ImageFulMa" },
             { data: "Edad" },
+            { data: "NumeroHistorial" },
             {
                 data: "Activo",
                 render: function (data) {

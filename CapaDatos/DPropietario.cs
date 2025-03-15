@@ -418,6 +418,141 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<EPropietario> PropietarioIdMascotasToHisto(int Idpropi)
+        {
+            try
+            {
+                EPropietario obj = null;
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    con.Open();
+
+                    // Obtener propietario
+                    using (SqlCommand comando = new SqlCommand("usp_BuscarPropietarioId", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("@IdPropietario", Idpropi);
+
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            if (dr.HasRows && dr.Read())
+                            {
+                                obj = new EPropietario
+                                {
+                                    IdPropietario = Convert.ToInt32(dr["IdPropietario"]),
+                                    NroCi = dr["NroCi"].ToString(),
+                                    Nombres = dr["Nombres"].ToString(),
+                                    Apellidos = dr["Apellidos"].ToString(),
+                                    Celular = dr["Celular"].ToString(),
+                                    Direccion = dr["Direccion"].ToString(),
+                                    Activo = Convert.ToBoolean(dr["Activo"]),
+                                    FechaRegistro = Convert.ToDateTime(dr["FechaRegistro"]).ToString("dd/MM/yyyy"),
+                                    VFechaRegistro = Convert.ToDateTime(dr["FechaRegistro"]),
+                                    ListaMascota = new List<EMascota>() // Inicializamos la lista vacía
+                                };
+                            }
+                        }
+                    }
+
+                    // Si se encontró un propietario, buscar sus mascotas
+                    if (obj != null)
+                    {
+                        using (SqlCommand mascotaCmd = new SqlCommand("usp_ObtenerMascotasIdPropietNue", con))
+                        {
+                            mascotaCmd.CommandType = CommandType.StoredProcedure;
+                            mascotaCmd.Parameters.AddWithValue("@IdPropietario", obj.IdPropietario);
+
+                            using (SqlDataReader mascotaDr = mascotaCmd.ExecuteReader())
+                            {
+                                while (mascotaDr.Read())
+                                {
+                                    EMascota masco = new EMascota()
+                                    {
+                                        IdMascota = Convert.ToInt32(mascotaDr["IdMascota"]),
+                                        Nombre = mascotaDr["Nombre"].ToString(),
+                                        ImagenMascota = mascotaDr["ImagenMascota"].ToString(),
+                                        Raza = mascotaDr["Raza"].ToString(),
+                                        Genero = Convert.ToChar(mascotaDr["Genero"].ToString()),
+                                        IdTipoMascota = Convert.ToInt32(mascotaDr["IdTipoMascota"]),
+                                        IdPropietario = Convert.ToInt32(mascotaDr["IdPropietario"]),
+                                        FechaNacimiento = Convert.ToDateTime(mascotaDr["FechaNacimiento"]).ToString("dd/MM/yyyy"),
+                                        VFechaNacimiento = Convert.ToDateTime(mascotaDr["FechaNacimiento"]),
+                                        Comentario = mascotaDr["Comentario"].ToString(),
+                                        Activo = Convert.ToBoolean(mascotaDr["Activo"]),
+                                        FechaRegistro = Convert.ToDateTime(mascotaDr["FechaRegistro"]).ToString("dd/MM/yyyy"),
+                                        VFechaRegistro = Convert.ToDateTime(mascotaDr["FechaRegistro"]),
+                                        TipoMascota = new ETipoMascota() { Descripcion = mascotaDr["DescripcionTipo"].ToString() },
+                                        ListaHistorialClinco = new List<EHistorialClinco>() // Inicializamos la lista vacía
+                                    };
+
+                                    obj.ListaMascota.Add(masco);
+                                }
+                            }
+                        }
+
+                        // Obtener historial clínico para cada mascota
+                        foreach (var mascota in obj.ListaMascota)
+                        {
+                            using (SqlCommand historialCmd = new SqlCommand("usp_ObtenerHistoriaClinicaIdMasco", con))
+                            {
+                                historialCmd.CommandType = CommandType.StoredProcedure;
+                                historialCmd.Parameters.AddWithValue("@IdMascota", mascota.IdMascota);
+
+                                using (SqlDataReader historialDr = historialCmd.ExecuteReader())
+                                {
+                                    while (historialDr.Read())
+                                    {
+                                        EHistorialClinco historial = new EHistorialClinco
+                                        {
+                                            IdHistoria = Convert.ToInt32(historialDr["IdHistoria"]),
+                                            IdVeterinaria = Convert.ToInt32(historialDr["IdVeterinaria"]),
+                                            Idservicio = Convert.ToInt32(historialDr["Idservicio"]),
+                                            IdMascota = Convert.ToInt32(historialDr["IdMascota"]),
+                                            Descripcion = historialDr["Descripcion"].ToString(),
+                                            Comentario = historialDr["Comentario"].ToString(),
+                                            Activo = Convert.ToBoolean(historialDr["Activo"]),
+                                            FechaRegistro = Convert.ToDateTime(historialDr["FechaRegistro"]).ToString("dd/MM/yyyy"),
+                                            VFechaRegistro = Convert.ToDateTime(historialDr["FechaRegistro"]),
+                                            Veterinaria = new EVeterinaria { NombreVeterinaria = historialDr["NombreVeterinaria"].ToString() },
+                                            Oservicio = new EServicio { Servicio = historialDr["Servicio"].ToString() }
+                                        };
+
+                                        mascota.ListaHistorialClinco.Add(historial);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return new Respuesta<EPropietario>
+                {
+                    Estado = obj != null,
+                    Data = obj,
+                    Mensaje = obj != null ? "Propietario y sus mascotas obtenidos correctamente" : "El propietario no se encuentra registrado"
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new Respuesta<EPropietario>
+                {
+                    Estado = false,
+                    Mensaje = "Error en la base de datos: " + ex.Message,
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<EPropietario>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
         public Respuesta<EPropietario> PropietarioId(int Idpropi)
         {
             try

@@ -15,8 +15,91 @@
     Panel Detalle Cliente
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="server">
-
     <div class="row" id="loaddet">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="m-t-0 m-b-15">Detalle del Cliente</h4>
+                    <input id="txtIdclienSt" value="0" type="hidden" />
+                    <input id="txtIdclien" name="IdPropietario" value="0" type="hidden" />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <strong>Nombres:</strong>
+                                    <label class="sin-margin-bottom" id="texnomn">Jose luis</label><br>
+                                    <strong>Apellidos:</strong>
+                                    <label class="sin-margin-bottom" id="texapelli">Balderrama</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <strong>Direccion:</strong>
+                                    <label class="sin-margin-bottom" id="texdirec">Barrio la chonta</label><br>
+                                    <strong>Nro mascotas:</strong>
+                                    <label class="sin-margin-bottom" id="lblnromasco">6 Mas</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <strong>Nro CI:</strong>
+                                    <label class="sin-margin-bottom" id="lblcip">76453233</label><br>
+                                    <strong>Contacto:</strong>
+                                    <label class="sin-margin-bottom" id="lblnrocel">69394012</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <button type="button" id="btnxNuevpp" class="btn btn-sm btn-success">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button type="button" id="btnNewMasco" class="btn btn-sm btn-primary">
+                                <i class="fas fa-paw"></i> + Mascota
+                            </button>
+                            <button type="button" id="btnVolverr" class="btn btn-sm btn-danger">
+                                <i class="fas fa-arrow-circle-right"></i> Volver
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header bg-primary py-2 px-4">
+                    <h3 class="card-title m-0"><i class="fas fa-paw"></i> Lista de Mascotas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12">
+
+                            <table id="tbMascode" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Imagen</th>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Raza</th>
+                                        <th>Genero</th>
+                                        <th>Edad</th>
+                                        <th>Historial</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%--<div class="row" id="loaddet">
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body user-card">
@@ -43,7 +126,6 @@
                     <p id="texdirec" class="text-muted">
                         Direccion cliente
                     </p>
-                    <%--<hr>--%>
                     <div class="row">
                     <div class="col-lg-12 text-center">
                         <button type="button" id="btnxNuevpp" class="btn btn-sm btn-success">
@@ -58,7 +140,6 @@
                     </div>
                 </div>
                 </div>
-                <!-- card-body -->
             </div>
         </div>
         <div class="col-lg-8">
@@ -83,7 +164,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
     <div class="modal fade bs-example-modal-lg" id="modalregmasco" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

@@ -72,6 +72,41 @@ namespace CapaPresentacion
             }
         }
 
+        //prueba
+        [WebMethod]
+        public static Respuesta<EPropietario> DetalleClientePrueba(int IdPropi)
+        {
+            try
+            {
+                // Obtener solo el propietario buscado en lugar de cargar toda la lista
+                Respuesta<EPropietario> respuesta = NPropietario.GetInstance().PropietarioIdMascotasToHisto(IdPropi);
+
+                if (respuesta == null || respuesta.Data == null)
+                {
+                    return new Respuesta<EPropietario>
+                    {
+                        Estado = false,
+                        Mensaje = "El cliente no se encuentra en el sistema"
+                    };
+                }
+
+                return new Respuesta<EPropietario>
+                {
+                    Estado = true,
+                    Data = respuesta.Data,
+                    Mensaje = "Detalle del Cliente encontrado"
+                };
+            }
+            catch (Exception)
+            {
+                // Aquí podrías loggear el error en un sistema de logs como Serilog, NLog, etc.
+                return new Respuesta<EPropietario>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado. Intente nuevamente."
+                };
+            }
+        }
         [WebMethod]
         public static Respuesta<bool> Guardar(EMascota oMascota, byte[] imageBytes)
         {

@@ -32,5 +32,10 @@ namespace CapaNegocio
         {
             return DTiposGeneral.GetInstance().ListaCategorias();
         }
+
+        public Respuesta<List<EServicio>> ListaServicios()
+        {
+            return DTiposGeneral.GetInstance().ListaServicios();
+        }
     }
 }

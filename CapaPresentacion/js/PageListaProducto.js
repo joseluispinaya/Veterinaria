@@ -152,6 +152,28 @@ $("#tbProductos tbody").on("click", ".btn-editar", function (e) {
     //mostrarModal(model, false);
 })
 
+$("#tbProductos tbody").on("click", ".btn-detalle", function (e) {
+    e.preventDefault();
+    let filaSeleccionada;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const model = table.row(filaSeleccionada).data();
+    $("#lblnompro").text(model.Nombre);
+    $("#lblmarca").text(model.Marca);
+    $("#lbldescri").val(model.Descripcion);
+    $("#lblcatego").text(model.Categoria.Descripcion);
+    $("#lblstock").text(model.Stock + " Und.");
+    $("#lblprecio").text(model.MontoCadena);
+    $("#imgprodet").attr("src", model.ImageFulP);
+
+    $("#modaldetalle").modal("show");
+})
+
 function sendDataToServerActuProd(request) {
     $.ajax({
         type: "POST",

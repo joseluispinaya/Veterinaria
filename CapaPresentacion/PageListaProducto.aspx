@@ -1,6 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageListaProducto.aspx.cs" Inherits="CapaPresentacion.PageListaProducto" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="assets/inpfile.css" rel="stylesheet"/>
+    <style>
+        .sin-margin-bottom {
+            margin-bottom: 0;
+        }
+
+        .titull {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     Lista de Productos
@@ -119,6 +129,59 @@
             </div>
         </div>
     </div>
+
+    <div id="modaldetalle" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabeld" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title m-0" id="myLargeModalLabeld">Detalle del producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="media-main">
+                            <a class="float-left" href="#">
+                                <%--<img id="imgprodet" class="thumb-lg rounded-circle" src="Imageprodu/sinimagenpro.png" alt="">--%>
+                                <img id="imgprodet" src="Imageprodu/sinimagenpro.png" alt="Foto usuario" style="height: 100px; max-width: 100px;">
+                            </a>
+                            <div class="info pl-3">
+                                <h4 id="lblnompro" class="mt-3">Nombre prod</h4>
+                                <p id="lblmarca" class="text-muted">Marca</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center m-t-15">
+                                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <%--<button type="button" id="btnxNfuevpp" class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-edit"></i> Cerrar
+                                </button>--%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <strong>Categoria:</strong>
+                        <label class="sin-margin-bottom" id="lblcatego">MEDICAMENTO</label><br>
+                        <strong>Stock:</strong>
+                        <label class="sin-margin-bottom" id="lblstock">15 unids</label><br>
+                        <strong>Precio:</strong>
+                        <label class="sin-margin-bottom" id="lblprecio">35 Bs</label>
+
+                        <div class="form-group">
+                            <label for="lbldescri">Descripcion</label>
+                            <textarea class="form-control" rows="2" id="lbldescri" readonly="readonly"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%--<div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button id="btnGuardarddCa" type="button" class="btn btn-sm btn-primary">Guardar Cambios</button>
+            </div>--%>
+        </div>
+    </div>
+</div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
     <script src="js/PageListaProducto.js" type="text/javascript"></script>

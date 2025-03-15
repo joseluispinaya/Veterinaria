@@ -23,6 +23,10 @@ namespace CapaEntidad
         public DateTime VFechaRegistro { get; set; }
         public ETipoMascota TipoMascota { get; set; }
         public EPropietario Propietario { get; set; }
+
+        public List<EHistorialClinco> ListaHistorialClinco { get; set; }
+        public int NumeroHistorial => ListaHistorialClinco == null ? 0 : ListaHistorialClinco.Count;
+
         public string ImageFulMa => string.IsNullOrEmpty(ImagenMascota)
             ? $"/Imagenes/sinimagen.png"
             : ImagenMascota;
@@ -47,22 +51,5 @@ namespace CapaEntidad
             }
         }
 
-
-        //public string Edad
-        //{
-        //    get
-        //    {
-        //        var diff = DateTime.Now.Subtract(VFechaNacimiento);
-        //        var days = diff.Days;
-        //        return days switch
-        //        {
-        //            < 30 => days + " dias",
-        //            >= 30 and <= 31 => "1 mes",
-        //            < 365 => Math.Floor(diff.TotalDays / 30) + " meses",
-        //            365 => "1 Año",
-        //            _ => Math.Floor(diff.TotalDays / 365) + " Años"
-        //        };
-        //    }
-        //}
     }
 }
