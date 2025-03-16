@@ -27,5 +27,11 @@ namespace CapaNegocio
         {
             return DMascota.GetInstance().RegistrarMascota(oMascota);
         }
+
+        public Respuesta<EMascota> MascotaDetalleHistorial(int IdMascota)
+        {
+            return DMascota.GetInstance().MascotaDetalleHistorial(IdMascota);
+        }
+
     }
 }

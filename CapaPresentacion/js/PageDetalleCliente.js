@@ -120,7 +120,7 @@ function cargarDatos(idProp) {
                 $("#lblnromasco").text(datos.NumeroMascotas + " Masc.");
 
                 var mascotasList = datos.ListaMascota;
-                console.log(mascotasList);
+                //console.log(mascotasList);
                 actualizarTablaMascotas(mascotasList);
 
             } else {
@@ -189,18 +189,6 @@ function actualizarTablaMascotas(mascotasList) {
         ],
         order: [[0, "desc"]],
         dom: "rt",
-        //dom: "Bfrtip",
-        //buttons: [
-        //    {
-        //        text: 'Exportar Excel',
-        //        extend: 'excelHtml5',
-        //        filename: 'Informe Mascotas',
-        //        exportOptions: {
-        //            columns: [1, 2, 3, 4, 5]
-        //        }
-        //    },
-        //    'pageLength'
-        //],
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
         }
@@ -265,6 +253,21 @@ $("#tbMascode tbody").on("click", ".btn-editar", function (e) {
     //swal("Mensaje", "La mascota su ID: " + model.IdMascota, "success")
     mostrarModal(model, false);
 });
+
+$("#tbMascode tbody").on("click", ".btn-detalle", function (e) {
+    e.preventDefault();
+    let filaSeleccionada;
+
+    if ($(this).closest("tr").hasClass("child")) {
+        filaSeleccionada = $(this).closest("tr").prev();
+    } else {
+        filaSeleccionada = $(this).closest("tr");
+    }
+
+    const model = table.row(filaSeleccionada).data();
+    var url = 'PageDetalleMascota.aspx?id=' + model.IdMascota;
+    window.location.href = url;
+})
 
 
 $('#btnNewMasco').on('click', function () {

@@ -31,7 +31,7 @@ namespace CapaPresentacion
                 return new Respuesta<List<ETipoMascota>>()
                 {
                     Estado = false,
-                    Mensaje = "Error al obtener los roles: " + ex.Message,
+                    Mensaje = "Error al obtener los Tipos: " + ex.Message,
                     Data = null
                 };
             }

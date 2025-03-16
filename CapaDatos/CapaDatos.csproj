@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexionBD.cs" />
+    <Compile Include="DHistorialClinco.cs" />
     <Compile Include="DMascota.cs" />
     <Compile Include="DProducto.cs" />
     <Compile Include="DPropietario.cs" />

@@ -195,15 +195,6 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <%--<div class="form-group col-sm-4">
-                                    <label>Nacido en</label>
-                                    <div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control input-sm" id="txtnacido">
-                                            <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                </div>--%>
                                 <div class="form-group col-sm-4">
                                     <label for="txtnacido">Nacido en</label>
                                     <input type="text" class="form-control input-sm" id="txtnacido">

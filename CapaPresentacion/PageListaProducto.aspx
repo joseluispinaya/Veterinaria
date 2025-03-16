@@ -142,7 +142,6 @@
                     <div class="col-lg-7">
                         <div class="media-main">
                             <a class="float-left" href="#">
-                                <%--<img id="imgprodet" class="thumb-lg rounded-circle" src="Imageprodu/sinimagenpro.png" alt="">--%>
                                 <img id="imgprodet" src="Imageprodu/sinimagenpro.png" alt="Foto usuario" style="height: 100px; max-width: 100px;">
                             </a>
                             <div class="info pl-3">
@@ -154,9 +153,7 @@
                         <div class="row">
                             <div class="col-lg-12 text-center m-t-15">
                                 <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
-                                <%--<button type="button" id="btnxNfuevpp" class="btn btn-sm btn-secondary">
-                                    <i class="fas fa-edit"></i> Cerrar
-                                </button>--%>
+                                
                             </div>
                         </div>
                     </div>
@@ -175,10 +172,6 @@
                     </div>
                 </div>
             </div>
-            <%--<div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button id="btnGuardarddCa" type="button" class="btn btn-sm btn-primary">Guardar Cambios</button>
-            </div>--%>
         </div>
     </div>
 </div>

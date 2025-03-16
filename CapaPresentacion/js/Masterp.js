@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     if (tokenSesion && usuarioL) {
         var usuParaenviar = JSON.parse(usuarioL);
-        console.log(usuParaenviar);
+        //console.log(usuParaenviar);
         var idUsu = usuParaenviar.IdUsuario;
 
         obtenerDetalleUsuarioR(idUsu);
