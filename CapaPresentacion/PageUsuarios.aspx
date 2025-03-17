@@ -1,6 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageUsuarios.aspx.cs" Inherits="CapaPresentacion.PageUsuarios" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="assets/inpfile.css" rel="stylesheet"/>
+    <%--<style>
+        table.dataTable thead th {
+            padding: 8px !important;
+            white-space: nowrap;
+        }
+        table.dataTable tbody td {
+            padding: 6px !important;
+            vertical-align: middle;
+        }
+        .dataTables_wrapper .dataTables_scrollBody {
+            min-height: auto;
+        }
+        table.dataTable {
+            border-collapse: collapse !important;
+        }
+    </style>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="titulo" runat="server">
     Panel Usuarios

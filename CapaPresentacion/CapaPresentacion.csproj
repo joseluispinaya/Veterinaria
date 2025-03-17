@@ -396,6 +396,7 @@
     <Content Include="js\PageDetalleMascota.js" />
     <Content Include="js\PageListaProducto.js" />
     <Content Include="js\PageUsuarios.js" />
+    <Content Include="js\PageVenta.js" />
     <Content Include="js\PageVeterinarias.js" />
     <Content Include="Login.aspx" />
     <Content Include="PageAddProducto.aspx" />
@@ -404,6 +405,7 @@
     <Content Include="PageDetalleMascota.aspx" />
     <Content Include="PageListaProducto.aspx" />
     <Content Include="PageUsuarios.aspx" />
+    <Content Include="PageVenta.aspx" />
     <Content Include="PageVeterinarias.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -470,6 +472,13 @@
     </Compile>
     <Compile Include="PageUsuarios.aspx.designer.cs">
       <DependentUpon>PageUsuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageVenta.aspx.cs">
+      <DependentUpon>PageVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageVenta.aspx.designer.cs">
+      <DependentUpon>PageVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="PageVeterinarias.aspx.cs">
       <DependentUpon>PageVeterinarias.aspx</DependentUpon>

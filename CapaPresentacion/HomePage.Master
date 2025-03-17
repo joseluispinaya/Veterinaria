@@ -149,10 +149,10 @@
                                 </ul>
                             </li>
                             <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-magnify"></i><span> Consultas </span><span class="float-right"><i class="mdi mdi-plus"></i></span></a>
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-magnify"></i><span> Ventas </span><span class="float-right"><i class="mdi mdi-plus"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="FrmConsultaActivo.aspx">Consulta Activos</a></li>
-                                    <li><a href="FrmBuscarActivoRepo.aspx">Activo por Codigo</a></li>
+                                    <li><a href="PageVenta.aspx">Nueva Venta</a></li>
+                                    <li><a href="#">Consulta Ventas</a></li>
                                 </ul>
                             </li>
                         </ul>
