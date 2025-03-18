@@ -39,21 +39,22 @@
                 <h3 class="card-title text-dark m-0"><i class="fas fa-cart-plus"></i> Registrar Nueva Venta</h3>
             </div>
             <div class="card-body custom-style-form"> <!-- AÑADIDO ESTA CLASE -->
+                <input id="txtIdVeteriVe" type="hidden" value="0" />
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="input-group custom-style-input-group">
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtnomvete" style="font-size: .875rem;">Veterinaria</label>
                             </div>
-                            <input id="txtnomvete" readonly type="text" class="form-control custom-style-form-control" value="La Granja">
+                            <input id="txtnomvete" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="input-group custom-style-input-group">
                             <div class="input-group-prepend">
-                                <label class="input-group-text custom-style-label" for="txtuserr" style="font-size: .875rem;">Usuario</label>
+                                <label class="input-group-text custom-style-label" for="txtuserr" style="font-size: .875rem;">Atendido por</label>
                             </div>
-                            <input id="txtuserr" readonly type="text" class="form-control custom-style-form-control" value="Pinaya jose">
+                            <input id="txtuserr" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -61,7 +62,7 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtfechaa" style="font-size: .875rem;">Fecha de Venta</label>
                             </div>
-                            <input id="txtfechaa" readonly type="text" class="form-control custom-style-form-control" value="17/03/2025">
+                            <input id="txtfechaa" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
                 </div>                
@@ -71,7 +72,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="m-0">Detalle cliente</h5>
-                        
+
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -106,7 +107,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="m-0">Detalle Producto</h5>
-                        
+                                <input id="txtIdProductoVen" type="hidden" value="0" />
+
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group" style="margin-bottom: 0;">
@@ -122,7 +124,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group" style="margin-bottom: 0;">
-                                            <label for="btnBuscarProduct" class="invisible">Descripción</label>
+                                            <label for="btnBuscarProduct" class="invisible">Buscar</label>
                                             <button type="button" id="btnBuscarProduct" class="btn btn-block btn-xs btn-success">
                                                 <i class="fas fa-search"></i> Buscar
                                             </button>
@@ -172,22 +174,14 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Cantidad</th>
                                         <th>Producto</th>
-                                        <th>Descripcion</th>
+                                        <%--<th>Descripcion</th>--%>
+                                        <th>Cantidad</th>
                                         <th>Precio</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>Ivemoc</td>
-                                        <td>para matar vichos</td>
-                                        <td>20</td>
-                                        <td>40</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -203,7 +197,7 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text custom-style-label" for="txtcantid" style="font-size: .875rem;">Total Produc</label>
                                     </div>
-                                    <input id="txtcantid" readonly type="text" class="form-control custom-style-form-control" value="12">
+                                    <input id="txtcantid" readonly type="text" class="form-control custom-style-form-control">
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -211,7 +205,7 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text custom-style-label" for="txttotalm" style="font-size: .875rem;">Total Bs/</label>
                                     </div>
-                                    <input id="txttotalm" readonly type="text" class="form-control custom-style-form-control" value="150">
+                                    <input id="txttotalm" readonly type="text" class="form-control custom-style-form-control" value="0">
                                 </div>
                             </div>
                             <div class="col-sm-4">
