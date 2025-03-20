@@ -47,6 +47,7 @@
     <Compile Include="NPropietario.cs" />
     <Compile Include="NTiposGeneral.cs" />
     <Compile Include="NUsuario.cs" />
+    <Compile Include="NVenta.cs" />
     <Compile Include="NVeterinaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

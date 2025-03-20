@@ -198,6 +198,9 @@ $('#btnAgregar').on('click', function () {
     }
 
     ProductosParaVentaC.push(productod)
+
+    controlarStock(parseInt(idProdu), parseInt(cantidadStr),true);
+
     mosProdr_Precio();
 
     $("#txtIdProductoVen").val("0");
@@ -243,7 +246,56 @@ function mosProdr_Precio() {
 
 $(document).on('click', 'button.btn-eliminar', function () {
     const _idProducto = $(this).data("idProductoa")
-    ProductosParaVentaC = ProductosParaVentaC.filter(p => p.IdProducto != _idProducto);
 
-    mosProdr_Precio();
+    // Buscar el producto antes de eliminarlo para obtener la cantidad
+    let productoEliminado = ProductosParaVentaC.find(p => p.IdProducto == _idProducto);
+
+    if (productoEliminado) {
+        let cantidadEliminada = productoEliminado.Cantidad;
+
+        // Llamar a la función controlarStock con restar = false (devolver stock)
+        controlarStock(_idProducto, cantidadEliminada, false);
+
+        // Filtrar la lista eliminando el producto
+        ProductosParaVentaC = ProductosParaVentaC.filter(p => p.IdProducto != _idProducto);
+
+        // Actualizar la tabla
+        mosProdr_Precio();
+    }
+
+
+    //ProductosParaVentaC = ProductosParaVentaC.filter(p => p.IdProducto != _idProducto);
+    //mosProdr_Precio();
 });
+
+function controlarStock($idproducto, $cantidad, $restar) {
+    var request = {
+        idproducto: $idproducto,
+        cantidad: $cantidad,
+        restar: $restar
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "PageVenta.aspx/ControlarStock",
+        data: JSON.stringify(request),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            if (response.d.Estado) {
+                //swal("Mensaje", response.d.Mensaje, "success");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        }
+    });
+}
+
+window.onbeforeunload = function () {
+    if (ProductosParaVentaC.length > 0) {
+        ProductosParaVentaC.forEach((item) => {
+            controlarStock(item.IdProducto, item.Cantidad, false); // Se devuelve el stock
+        });
+    }
+};

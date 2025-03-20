@@ -46,5 +46,48 @@ namespace CapaPresentacion
                 };
             }
         }
+
+        [WebMethod]
+        public static Respuesta<int> GuardarVentaIdCliente(string xml)
+        {
+            try
+            {
+                Respuesta<int> respuesta = NVenta.GetInstance().RegistrarVentaIdclie(xml);
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<int> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<EVenta> DetalleVenta(int IdVenta)
+        {
+            try
+            {
+                Respuesta<EVenta> oVenta = NVenta.GetInstance().ObtenerDetalleVenta(IdVenta);
+                return oVenta;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return new Respuesta<EVenta>() { Estado = false, Data = null, Mensaje = ex.Message };
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<bool> ControlarStock(int idproducto, int cantidad, bool restar)
+        {
+            try
+            {
+                Respuesta<bool> respuesta = NVenta.GetInstance().ControlarStock(idproducto, cantidad, restar);
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
     }
 }

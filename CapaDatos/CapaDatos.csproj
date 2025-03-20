@@ -48,6 +48,7 @@
     <Compile Include="DPropietario.cs" />
     <Compile Include="DTiposGeneral.cs" />
     <Compile Include="DUsuario.cs" />
+    <Compile Include="DVenta.cs" />
     <Compile Include="DVeterinaria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
