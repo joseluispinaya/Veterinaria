@@ -71,10 +71,10 @@
             <div class="card-header py-2 px-4">
                 <h3 class="card-title text-dark m-0"><i class="fas fa-cart-plus"></i> Registrar Nueva Venta</h3>
             </div>
-            <div class="card-body custom-style-form"> <!-- AÑADIDO ESTA CLASE -->
+            <div class="card-body custom-style-form" id="loadingvent">
                 <input id="txtIdVeteriVe" type="hidden" value="0" />
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="input-group custom-style-input-group mb-2">
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtnomvete" style="font-size: .875rem;">Veterinaria</label>
@@ -82,7 +82,7 @@
                             <input id="txtnomvete" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="input-group custom-style-input-group mb-2">
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtuserr" style="font-size: .875rem;">Atendido por</label>
@@ -90,7 +90,7 @@
                             <input id="txtuserr" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="input-group custom-style-input-group">
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtfechaa" style="font-size: .875rem;">Fecha de Venta</label>
@@ -98,12 +98,21 @@
                             <input id="txtfechaa" readonly type="text" class="form-control custom-style-form-control">
                         </div>
                     </div>
+                    <div class="col-sm-3">
+                        <div class="input-group custom-style-input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text custom-style-label" for="txtfechaafor" style="font-size: .875rem;">Fecha Formato</label>
+                            </div>
+                            <input id="txtfechaafor" readonly type="text" class="form-control custom-style-form-control">
+                        </div>
+                    </div>
                 </div>                
                 <hr />
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" id="loadClib">
+                                <input id="txtIdClienVen" type="hidden" value="0" />
                                 <h5 class="m-0">Detalle cliente</h5>
 
                                 <div class="row">
@@ -145,16 +154,6 @@
                                         </div>
                                     </div>
                                 </div>
-                        
-                                <%--<div class="form-group text-center">
-                                    <button type="button" id="btnBuscarcli" class="btn btn-sm btn-success">
-                                        <i class="fas fa-search"></i> Buscar
-                                    </button>
-                                
-                                    <button type="button" id="btnRegisclie" class="btn btn-sm btn-primary m-l-10">
-                                        <i class="fas fa-edit"></i> Nuevo Registro
-                                    </button>
-                                </div>--%>
                         
                             </div>
                         </div>
@@ -223,7 +222,6 @@
                     </div>
                 </div>
 
-                <%--<hr />--%>
 
                 <div class="row">
                     <div class="col-lg-9">
@@ -259,7 +257,7 @@
                             <input id="txttotalm" readonly type="text" class="form-control custom-style-form-control" value="0">
                         </div>
                         <div class="form-group text-center">
-                            <button type="button" id="btnCalcular" class="btn btn-sm btn-success">
+                            <button type="button" id="btnguardarventa" class="btn btn-sm btn-success">
                                 <i class="fas fa-hand-holding-usd"></i> Guardar Venta
                             </button>
                         </div>
@@ -383,5 +381,10 @@
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+    <%--<script src="https://cdn.jsdelivr.net/npm/jspdf-invoice-template/dist/jspdf-invoice-template.min.js"></script>--%>
+    <script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
     <script src="js/PageVenta.js" type="text/javascript"></script>
 </asp:Content>

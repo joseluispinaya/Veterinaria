@@ -48,6 +48,41 @@ namespace CapaPresentacion
         }
 
         [WebMethod]
+        public static Respuesta<EPropietario> BuscarPropie(string Nroci)
+        {
+            try
+            {
+                // Obtener solo el propietario buscado en lugar de cargar toda la lista
+                Respuesta<EPropietario> respuesta = NPropietario.GetInstance().BuscarPropietarioCi(Nroci);
+
+                if (respuesta == null || respuesta.Data == null)
+                {
+                    return new Respuesta<EPropietario>
+                    {
+                        Estado = false,
+                        Mensaje = "El número de CI no se encuentra registrado"
+                    };
+                }
+
+                return new Respuesta<EPropietario>
+                {
+                    Estado = true,
+                    Data = respuesta.Data,
+                    Mensaje = "Propietario encontrado"
+                };
+            }
+            catch (Exception)
+            {
+                // Aquí podrías loggear el error en un sistema de logs como Serilog, NLog, etc.
+                return new Respuesta<EPropietario>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado. Intente nuevamente."
+                };
+            }
+        }
+
+        [WebMethod]
         public static Respuesta<int> GuardarVentaIdCliente(string xml)
         {
             try
@@ -66,7 +101,7 @@ namespace CapaPresentacion
         {
             try
             {
-                Respuesta<EVenta> oVenta = NVenta.GetInstance().ObtenerDetalleVenta(IdVenta);
+                Respuesta<EVenta> oVenta = NVenta.GetInstance().ObtenerDetalleVentaIa(IdVenta);
                 return oVenta;
             }
             catch (Exception ex)

@@ -32,6 +32,12 @@ namespace CapaNegocio
         {
             return DVenta.GetInstance().ObtenerDetalleVenta(IdVenta);
         }
+
+        public Respuesta<EVenta> ObtenerDetalleVentaIa(int IdVenta)
+        {
+            return DVenta.GetInstance().ObtenerDetalleVentaIa(IdVenta);
+        }
+
         public Respuesta<bool> ControlarStock(int IdProducto, int Cantidad, bool Restar)
         {
             return DVenta.GetInstance().ControlarStock(IdProducto, Cantidad, Restar);

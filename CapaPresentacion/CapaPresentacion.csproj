@@ -397,6 +397,7 @@
     <Content Include="js\PageListaProducto.js" />
     <Content Include="js\PageUsuarios.js" />
     <Content Include="js\PageVenta.js" />
+    <Content Include="js\PageVentaPru.js" />
     <Content Include="js\PageVeterinarias.js" />
     <Content Include="Login.aspx" />
     <Content Include="PageAddProducto.aspx" />

@@ -188,6 +188,121 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<EVenta> ObtenerDetalleVentaIa(int IdVenta)
+        {
+            try
+            {
+                EVenta rptDetalleVenta = null;
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_ObtenerDetalleVenta", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@IdVenta", IdVenta);
+
+                        con.Open();
+                        using (XmlReader dr = cmd.ExecuteXmlReader())
+                        {
+                            if (dr.Read())
+                            {
+                                XDocument doc = XDocument.Load(dr);
+                                var detalleVentaElement = doc.Element("DETALLE_VENTA");
+
+                                if (detalleVentaElement != null)
+                                {
+                                    // Mapear los datos principales de la venta
+                                    rptDetalleVenta = new EVenta
+                                    {
+                                        Codigo = detalleVentaElement.Element("Codigo").Value,
+                                        CantidadTotal = int.Parse(detalleVentaElement.Element("CantidadTotal").Value),
+                                        TotalCosto = float.Parse(detalleVentaElement.Element("TotalCosto").Value),
+                                        FechaRegistro = detalleVentaElement.Element("FechaRegistro").Value
+                                    };
+
+                                    // Obtener información de la veterinaria
+                                    var detalleVeterinaElement = detalleVentaElement.Element("DETALLE_VETERINARIA");
+                                    if (detalleVeterinaElement != null)
+                                    {
+                                        var veterinariaElement = detalleVeterinaElement.Element("VETERINARIA");
+                                        if (veterinariaElement != null)
+                                        {
+                                            rptDetalleVenta.Veterinaria = new EVeterinaria
+                                            {
+                                                ImagenLogo = veterinariaElement.Element("ImagenLogo").Value,
+                                                NombreVeterinaria = veterinariaElement.Element("NombreVeterinaria").Value,
+                                                Propietario = veterinariaElement.Element("Propietario").Value,
+                                                Direccion = veterinariaElement.Element("Direccion").Value,
+                                                Celular = veterinariaElement.Element("Celular").Value
+                                            };
+                                        }
+                                    }
+
+                                    // Obtener información del propietario
+                                    var detallePropietarioElement = detalleVentaElement.Element("DETALLE_PROPIETARIO");
+                                    if (detallePropietarioElement != null)
+                                    {
+                                        var propietarioElement = detallePropietarioElement.Element("PROPIETARIO");
+                                        if (propietarioElement != null)
+                                        {
+                                            rptDetalleVenta.Propietario = new EPropietario
+                                            {
+                                                NroCi = propietarioElement.Element("NroCi").Value,
+                                                Nombres = propietarioElement.Element("Nombres").Value,
+                                                Apellidos = propietarioElement.Element("Apellidos").Value,
+                                                Celular = propietarioElement.Element("Celular").Value,
+                                                Direccion = propietarioElement.Element("Direccion").Value
+                                            };
+                                        }
+                                    }
+
+                                    // Obtener lista de productos
+                                    var detalleProductosElement = detalleVentaElement.Element("DETALLE_PRODUCTO");
+                                    if (detalleProductosElement != null)
+                                    {
+                                        rptDetalleVenta.ListaDetalleVenta = detalleProductosElement.Elements("PRODUCTO")
+                                            .Select(producto => new EDetalleVenta
+                                            {
+                                                IdProducto = int.Parse(producto.Element("IdProducto").Value),
+                                                Cantidad = int.Parse(producto.Element("Cantidad").Value),
+                                                NombreProducto = producto.Element("Nombre").Value,
+                                                PrecioUnidad = float.Parse(producto.Element("PrecioUnidad").Value),
+                                                ImporteTotal = float.Parse(producto.Element("ImporteTotal").Value)
+                                            }).ToList();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return new Respuesta<EVenta>
+                {
+                    Estado = rptDetalleVenta != null,
+                    Data = rptDetalleVenta,
+                    Mensaje = rptDetalleVenta != null ? "Detalle obtenido correctamente" : "No se encontraron detalles para la venta especificada"
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new Respuesta<EVenta>
+                {
+                    Estado = false,
+                    Mensaje = "Error en la base de datos: " + ex.Message,
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<EVenta>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
         public Respuesta<bool> ControlarStock(int IdProducto, int Cantidad, bool Restar)
         {
             try
