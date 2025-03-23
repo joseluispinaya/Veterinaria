@@ -381,10 +381,10 @@
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
-    <%--<script src="https://cdn.jsdelivr.net/npm/jspdf-invoice-template/dist/jspdf-invoice-template.min.js"></script>--%>
-    <script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>--%>
+    <%--<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>--%>
+    <script src="https://unpkg.com/jspdf-invoice-template@1.3.1/dist/index.js"></script>
     <script src="js/PageVenta.js" type="text/javascript"></script>
 </asp:Content>

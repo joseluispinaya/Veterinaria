@@ -383,6 +383,7 @@
     <Content Include="assets\toastr\toastr.min.css" />
     <Content Include="assets\toastr\toastr.min.js" />
     <Content Include="Imagemas\escudorib.png" />
+    <Content Include="Imagenes\logoveter.png" />
     <Content Include="Imagenes\sinimagen.png" />
     <Content Include="Imageprodu\sinimagenpro.png" />
     <Content Include="Imgusers\logomas.png" />

@@ -1,6 +1,6 @@
 ﻿
 var table;
-let jsPDFInstance;
+//let jsPDFInstance;
 
 function ObtenerFechaVentaIa() {
     const d = new Date();
@@ -21,30 +21,6 @@ function ObtenerFechaVenta() {
 
 $(document).ready(function () {
 
-    if (window.jsPDFInvoiceTemplate) {
-        console.log("jsPDFInvoiceTemplate está disponible.");
-        const { default: jsPDFInvoiceTemplate } = window.jsPDFInvoiceTemplate;
-        //const { jsPDF } = window.jsPDFInvoiceTemplate;
-        if (jsPDFInvoiceTemplate) {
-
-            jsPDFInstance = jsPDFInvoiceTemplate;
-            console.log("jsPDF tem cargado correctamente.");
-            //generarPDFHorizontal();
-        } else {
-            console.error("jsPDF tem no se encontró dentro de jsPDFInvoiceTemplate.");
-        }
-    } else {
-        console.error("jsPDFInvoiceTemplate no está disponible.");
-    }
-
-    //const { jsPDF } = window.jsPDFInvoiceTemplate;
-
-    //if (typeof jsPDF !== 'undefined') {
-    //    jsPDFInstance = jsPDF;
-    //} else {
-    //    console.error("jsPDF invoce no está cargado.");
-    //}
-
     $("#txtproductocantidad").val("0");
     $("#txtfechaa").val(ObtenerFechaVenta());
     $("#txtfechaafor").val(ObtenerFechaVentaIa());
@@ -53,7 +29,6 @@ $(document).ready(function () {
     $("#txtIdVeteriVe").val(datosUserv.IdVeterinaria);
     $("#txtnomvete").val(datosUserv.Veterinaria.NombreVeterinaria);
     $("#txtuserr").val(`${datosUserv.Nombres} ${datosUserv.Apellidos}`);
-    //$("#txtuserr").val(datosUserv.Nombres + " " + datosUserv.Apellidos);
 })
 
 function listaProductosVenta() {
@@ -514,75 +489,89 @@ function cargarDetalleVenta() {
     });
 }
 
-function generarPDFHorizontal() {
-    if (jsPDFInstance) {
-        const props = {
-            outputType: 'save',
-            returnJsPDFDocObject: true,
-            fileName: "Detalle de Venta",
-            orientationLandscape: false,
-            compress: true,
-            logo: {
-                src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-                type: 'PNG',
-                width: 53.33,
-                height: 26.66,
-                margin: { top: 0, left: 0 }
-            },
-            business: {
-                name: "Zonosis GAMR",
-                address: "Barrio la cruz, Calle 5",
-                phone: "(+591) 123-456-789",
-                email: "gamr@gmail.com",
-                website: "www.gamr.com",
-            },
-            contact: {
-                label: "Detalle de Usuario:",
-                name: "Client Name",
-                address: "Barrio la chonta",
-                phone: "(+355) 069 22 22 222",
-                email: "client@website.al",
-            },
-            invoice: {
-                label: "Informe #: ",
-                num: 20,
-                invDate: "Fecha Emision: 11/11/2024 12:12",
-                invGenDate: "Fecha Registro: 02/02/2024 16:12",
-                headerBorder: true,
-                tableBodyBorder: true,
-                header: [
-                    { title: "#", style: { width: 10 } },
-                    { title: "Title", style: { width: 30 } },
-                    { title: "Descripcion", style: { width: 70 } },
-                    { title: "Precio" },
-                    { title: "Cantidad" },
-                    { title: "Unid" },
-                    { title: "Total" }
-                ],
-                table: Array.from(Array(24), (item, index) => ([
-                    index + 1,
-                    "There are variations ",
-                    "Lorem Ipsum is simply dummy text dummy te ",
-                    200.5,
-                    4.5,
-                    "m2",
-                    400.5
-                ])),
-                invDescLabel: "Gracias por usar nuestro sistema",
-            },
-            footer: {
-                text: "Este es un documento generado automáticamente.",
-            },
-            pageEnable: true,
-            pageLabel: "Página ",
-        };
 
-        const pdfObject = jsPDFInstance(props);
-        console.log(pdfObject);
 
-    } else {
-        console.error("jsPDF no está disponible en generarPDFHorizontal.");
-    }
+var props = {
+    outputType: jsPDFInvoiceTemplate.OutputType.Save,
+    returnJsPDFDocObject: true,
+    fileName: "Factura_Prueba 2025",
+    orientationLandscape: true,
+    //compress: true,
+    logo: {
+        //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+        src: "../Imagenes/logoveter.png",
+        type: 'PNG', //optional, when src= data:uri (nodejs case)
+        width: 53.33, //aspect ratio = width/height
+        height: 26.66,
+        margin: {
+            top: 0, //negative or positive num, from the current position
+            left: 0 //negative or positive num, from the current position
+        }
+    },
+    business: {
+        name: "Business Name",
+        address: "Albania, Tirane ish-Dogana, Durres 2001",
+        phone: "(+355) 069 11 11 111",
+        email: "email@example.com",
+        email_1: "info@example.al",
+        website: "www.example.al",
+    },
+    contact: {
+        label: "Invoice issued for:",
+        name: "Client Name",
+        address: "Albania, Tirane, Astir",
+        phone: "(+355) 069 22 22 222",
+        email: "client@website.al",
+        otherInfo: "www.website.al",
+    },
+    invoice: {
+        label: "Invoice #: ",
+        num: 19,
+        invDate: "Payment Date: 01/01/2021 18:12",
+        invGenDate: "Invoice Date: 02/02/2021 10:17",
+        headerBorder: false,
+        tableBodyBorder: false,
+        header: ["#", "Descripcion", "Price", "Quantity", "Unit", "Total"],
+        table: Array.from(Array(10), (item, index) => ([
+            index + 1,
+            "There are many variations ",
+            200.5,
+            4.5,
+            "m2",
+            400.5
+        ])),
+        invTotalLabel: "Total:",
+        invTotal: "145,250.50",
+        invCurrency: "ALL",
+        row1: {
+            col1: 'VAT:',
+            col2: '20',
+            col3: '%',
+            style: {
+                fontSize: 10 //optional, default 12
+            }
+        },
+        row2: {
+            col1: 'SubTotal:',
+            col2: '116,199.90',
+            col3: 'ALL',
+            style: {
+                fontSize: 10 //optional, default 12
+            }
+        },
+        invDescLabel: "Invoice Note",
+        invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+    },
+    footer: {
+        text: "The invoice is created on a computer and is valid without the signature and stamp.",
+    },
+    pageEnable: true,
+    pageLabel: "Page ",
+};
+
+function GenerarPDFpruebaaa() {
+    var pdfObject = jsPDFInvoiceTemplate.default(props);
+    console.log(pdfObject);
 }
 
 $('#btnRegisclie').on('click', function () {
@@ -592,8 +581,10 @@ $('#btnRegisclie').on('click', function () {
     //    return;
     //}
 
-    generarPDFHorizontal();
-    //cargarDetalleVenta();
+    //generarPDFHorizontal();
+    //console.log("Botón 'Reporte' presionado");
+    //GenerarPDFprueba();
+    GenerarPDFpruebaaa();
 });
 
 window.onbeforeunload = function () {
