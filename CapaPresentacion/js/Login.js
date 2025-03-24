@@ -1,4 +1,10 @@
 ﻿
+$(document).ready(function () {
+    if (!sessionStorage.getItem("reloaded")) {
+        sessionStorage.setItem("reloaded", "true");
+        location.reload();
+    }
+});
 
 $('#btnIniciarSesion').on('click', function () {
 

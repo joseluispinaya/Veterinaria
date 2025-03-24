@@ -179,4 +179,5 @@
 </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
+    <script src="js/InicioP.js" type="text/javascript"></script>
 </asp:Content>

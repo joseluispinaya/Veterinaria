@@ -14,8 +14,8 @@ namespace CapaPresentacion
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
-		}
+            //Response.AppendHeader("Cache-Control", "no-store");
+        }
 
         [WebMethod]
         public static Respuesta<string> ObtenerToken(int IdUsu)

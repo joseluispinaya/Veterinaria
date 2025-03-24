@@ -18,5 +18,7 @@ namespace CapaEntidad
         public EVeterinaria Veterinaria { get; set; }
         public EPropietario Propietario { get; set; }
         public List<EDetalleVenta> ListaDetalleVenta { get; set; }
+        public string TotveCadena => $"Bs/ {TotalCosto:F2}";
+        public string TotcanttCadena => $"{CantidadTotal}";
     }
 }

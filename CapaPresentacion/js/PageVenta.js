@@ -377,6 +377,7 @@ function dataGuardarVentaCliente() {
                 ProductosParaVentaC = [];
                 mosProdr_Precio();
 
+                cargarDetalleVenta(response.d.Valor);
                 //CLIENTE
                 $("#txtIdClienVen").val("0");
                 $("#txtclienCi").val("");
@@ -392,9 +393,8 @@ function dataGuardarVentaCliente() {
                 $("#txtproductocantidad").val("0");
 
                 //PRECIOS
-                //$("#txtcantid").val("0");
-                let mensaje = `${response.d.Mensaje} Nro Venta: ${response.d.Valor}`;
-                swal("Registrado!", mensaje, "success");
+                //let mensaje = `${response.d.Mensaje} Nro Venta: ${response.d.Valor}`;
+                swal("Registrado!", response.d.Mensaje, "success");
 
             } else {
                 swal("Lo sentimos!", response.d.Mensaje, "error");
@@ -462,10 +462,83 @@ function controlarStock($idproducto, $cantidad, $restar) {
     });
 }
 
-function cargarDetalleVenta() {
+function ReporteVenta(dataVenta) {
+    var props = {
+        outputType: jsPDFInvoiceTemplate.OutputType.Save,
+        returnJsPDFDocObject: true,
+        fileName: "Nota_Ventas_2025",
+        orientationLandscape: false,
+        //compress: true,
+        logo: {
+            src: "../Imagenes/logoveter.png",
+            type: 'PNG', //optional, when src= data:uri (nodejs case)
+            width: 53.33, //aspect ratio = width/height
+            height: 26.66,
+            margin: {
+                top: 0, //negative or positive num, from the current position
+                left: 0 //negative or positive num, from the current position
+            }
+        },
+        business: {
+            name: dataVenta.Veterinaria.NombreVeterinaria,
+            address: dataVenta.Veterinaria.Direccion,
+            phone: dataVenta.Veterinaria.Celular,
+            email: dataVenta.Veterinaria.Propietario,
+            email_1: "veterinarias@gmail.com",
+            website: "www.Veterinarias.com",
+        },
+        contact: {
+            label: "Nota de Venta para:",
+            name: dataVenta.Propietario.Nombres,
+            address: dataVenta.Propietario.Apellidos,
+            phone: dataVenta.Propietario.Celular,
+            email: dataVenta.Propietario.Direccion,
+            otherInfo: dataVenta.Propietario.NroCi,
+        },
+        invoice: {
+            label: "Nro de Venta #: ",
+            num: dataVenta.Codigo,
+            invDate: dataVenta.FechaRegistro,
+            invGenDate: dataVenta.FechaRegistro,
+            headerBorder: false,
+            tableBodyBorder: false,
+            header: ["Producto", "Cantidad", "Precio", "Total"],
+            table: dataVenta.ListaDetalleVenta.map((item, index) => [
+                item.NombreProducto,
+                item.Cantidad,
+                item.PrecioCadena,
+                item.TotCadena
+            ]),
+            invTotalLabel: "Total:",
+            invTotal: dataVenta.TotveCadena,
+            invCurrency: "BOB",
+            row1: {
+                col1: 'Cantidad:',
+                col2: dataVenta.TotcanttCadena,
+                col3: 'Unds',
+                style: {
+                    fontSize: 10 //optional, default 12
+                }
+            },
+            invDescLabel: "Gracias por usar nuestro sistema",
+            invDesc: "Gracia por preferirnos y realizar su compra en nuetra red de veterinarias unidas Riberalta-Beni-Bolivia.",
+        },
+        footer: {
+            text: "Este es un documento generado automáticamente.",
+        },
+        pageEnable: true,
+        pageLabel: "Page ",
+    };
+
+    var pdfObject = jsPDFInvoiceTemplate.default(props);
+    console.log(pdfObject);
+}
+
+function cargarDetalleVenta(IdVe) {
 
     //var request = { IdVenta: parseInt($("#txtIdVentaa").val()) }
-    var request = { IdVenta: 1 }
+    //var request = { IdVenta: 1 }
+    var request = { IdVenta: IdVe }
 
     $.ajax({
         type: "POST",
@@ -477,7 +550,8 @@ function cargarDetalleVenta() {
             if (response.d.Estado) {
                 var detalle = response.d.Data;
                 console.log(detalle)
-                swal("Mensaje", response.d.Mensaje, "success");
+                ReporteVenta(detalle)
+                //swal("Mensaje", response.d.Mensaje, "success");
 
             } else {
                 swal("Mensaje", response.d.Mensaje, "warning");
@@ -490,101 +564,91 @@ function cargarDetalleVenta() {
 }
 
 
-
-var props = {
-    outputType: jsPDFInvoiceTemplate.OutputType.Save,
-    returnJsPDFDocObject: true,
-    fileName: "Factura_Prueba 2025",
-    orientationLandscape: true,
-    //compress: true,
-    logo: {
-        //src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-        src: "../Imagenes/logoveter.png",
-        type: 'PNG', //optional, when src= data:uri (nodejs case)
-        width: 53.33, //aspect ratio = width/height
-        height: 26.66,
-        margin: {
-            top: 0, //negative or positive num, from the current position
-            left: 0 //negative or positive num, from the current position
-        }
-    },
-    business: {
-        name: "Business Name",
-        address: "Albania, Tirane ish-Dogana, Durres 2001",
-        phone: "(+355) 069 11 11 111",
-        email: "email@example.com",
-        email_1: "info@example.al",
-        website: "www.example.al",
-    },
-    contact: {
-        label: "Invoice issued for:",
-        name: "Client Name",
-        address: "Albania, Tirane, Astir",
-        phone: "(+355) 069 22 22 222",
-        email: "client@website.al",
-        otherInfo: "www.website.al",
-    },
-    invoice: {
-        label: "Invoice #: ",
-        num: 19,
-        invDate: "Payment Date: 01/01/2021 18:12",
-        invGenDate: "Invoice Date: 02/02/2021 10:17",
-        headerBorder: false,
-        tableBodyBorder: false,
-        header: ["#", "Descripcion", "Price", "Quantity", "Unit", "Total"],
-        table: Array.from(Array(10), (item, index) => ([
-            index + 1,
-            "There are many variations ",
-            200.5,
-            4.5,
-            "m2",
-            400.5
-        ])),
-        invTotalLabel: "Total:",
-        invTotal: "145,250.50",
-        invCurrency: "ALL",
-        row1: {
-            col1: 'VAT:',
-            col2: '20',
-            col3: '%',
-            style: {
-                fontSize: 10 //optional, default 12
+function GenerarPDFprueba() {
+    var props = {
+        outputType: jsPDFInvoiceTemplate.OutputType.Save,
+        returnJsPDFDocObject: true,
+        fileName: "Nota_Prueba 2025",
+        orientationLandscape: false,
+        //compress: true,
+        logo: {
+            src: "../Imagenes/logoveter.png",
+            type: 'PNG', //optional, when src= data:uri (nodejs case)
+            width: 53.33, //aspect ratio = width/height
+            height: 26.66,
+            margin: {
+                top: 0, //negative or positive num, from the current position
+                left: 0 //negative or positive num, from the current position
             }
         },
-        row2: {
-            col1: 'SubTotal:',
-            col2: '116,199.90',
-            col3: 'ALL',
-            style: {
-                fontSize: 10 //optional, default 12
-            }
+        business: {
+            name: "Business Name",
+            address: "Albania, Tirane ish-Dogana, Durres 2001",
+            phone: "(+355) 069 11 11 111",
+            email: "email@example.com",
+            email_1: "info@example.al",
+            website: "www.example.al",
         },
-        invDescLabel: "Invoice Note",
-        invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-    },
-    footer: {
-        text: "The invoice is created on a computer and is valid without the signature and stamp.",
-    },
-    pageEnable: true,
-    pageLabel: "Page ",
-};
+        contact: {
+            label: "Invoice issued for:",
+            name: "Client Name",
+            address: "Albania, Tirane, Astir",
+            phone: "(+355) 069 22 22 222",
+            email: "client@website.al",
+            otherInfo: "www.website.al",
+        },
+        invoice: {
+            label: "Invoice #: ",
+            num: 19,
+            invDate: "Payment Date: 01/01/2021 18:12",
+            invGenDate: "Invoice Date: 02/02/2021 10:17",
+            headerBorder: false,
+            tableBodyBorder: false,
+            header: ["#", "Descripcion", "Price", "Quantity", "Unit", "Total"],
+            table: Array.from(Array(10), (item, index) => ([
+                index + 1,
+                "There are many variations ",
+                200.5,
+                4.5,
+                "m2",
+                400.5
+            ])),
+            invTotalLabel: "Total:",
+            invTotal: "145,250.50",
+            invCurrency: "ALL",
+            row1: {
+                col1: 'VAT:',
+                col2: '20',
+                col3: '%',
+                style: {
+                    fontSize: 10 //optional, default 12
+                }
+            },
+            row2: {
+                col1: 'SubTotal:',
+                col2: '116,199.90',
+                col3: 'ALL',
+                style: {
+                    fontSize: 10 //optional, default 12
+                }
+            },
+            invDescLabel: "Invoice Note",
+            invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+        },
+        footer: {
+            text: "The invoice is created on a computer and is valid without the signature and stamp.",
+        },
+        pageEnable: true,
+        pageLabel: "Page ",
+    };
 
-function GenerarPDFpruebaaa() {
     var pdfObject = jsPDFInvoiceTemplate.default(props);
     console.log(pdfObject);
 }
 
 $('#btnRegisclie').on('click', function () {
 
-    //if (parseInt($("#txtIdVentaa").val()) === 0) {
-    //    swal("Mensaje", "Ocurrio un error", "warning")
-    //    return;
-    //}
-
-    //generarPDFHorizontal();
-    //console.log("Botón 'Reporte' presionado");
-    //GenerarPDFprueba();
-    GenerarPDFpruebaaa();
+    //cargarDetalleVenta(1);
 });
 
 window.onbeforeunload = function () {

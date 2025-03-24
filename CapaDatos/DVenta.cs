@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using CapaEntidad;
 using System.Xml.Linq;
 using System.Xml;
+using System.Globalization;
 
 namespace CapaDatos
 {
@@ -216,7 +217,7 @@ namespace CapaDatos
                                     {
                                         Codigo = detalleVentaElement.Element("Codigo").Value,
                                         CantidadTotal = int.Parse(detalleVentaElement.Element("CantidadTotal").Value),
-                                        TotalCosto = float.Parse(detalleVentaElement.Element("TotalCosto").Value),
+                                        TotalCosto = float.Parse(detalleVentaElement.Element("TotalCosto").Value, CultureInfo.InvariantCulture),
                                         FechaRegistro = detalleVentaElement.Element("FechaRegistro").Value
                                     };
 
@@ -266,8 +267,8 @@ namespace CapaDatos
                                                 IdProducto = int.Parse(producto.Element("IdProducto").Value),
                                                 Cantidad = int.Parse(producto.Element("Cantidad").Value),
                                                 NombreProducto = producto.Element("Nombre").Value,
-                                                PrecioUnidad = float.Parse(producto.Element("PrecioUnidad").Value),
-                                                ImporteTotal = float.Parse(producto.Element("ImporteTotal").Value)
+                                                PrecioUnidad = float.Parse(producto.Element("PrecioUnidad").Value, CultureInfo.InvariantCulture),
+                                                ImporteTotal = float.Parse(producto.Element("ImporteTotal").Value, CultureInfo.InvariantCulture)
                                             }).ToList();
                                     }
                                 }

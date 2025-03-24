@@ -89,7 +89,7 @@ function listaVeterinarias() {
                 return JSON.stringify(d);
             },
             "dataSrc": function (json) {
-                //console.log("Response from server:", json.d.objeto);
+                //console.log("Response from server:", json.d.Data);
                 if (json.d.Estado) {
                     return json.d.Data; // apunta al array de datos
                 } else {
