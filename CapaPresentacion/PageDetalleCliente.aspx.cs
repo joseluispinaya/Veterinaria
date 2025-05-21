@@ -37,6 +37,7 @@ namespace CapaPresentacion
             }
         }
 
+        //no se esta usando
         [WebMethod]
         public static Respuesta<EPropietario> DetalleCliente(int IdPropi)
         {
@@ -107,6 +108,8 @@ namespace CapaPresentacion
                 };
             }
         }
+
+
         [WebMethod]
         public static Respuesta<bool> Guardar(EMascota oMascota, byte[] imageBytes)
         {
