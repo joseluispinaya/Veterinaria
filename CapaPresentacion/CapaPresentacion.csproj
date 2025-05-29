@@ -414,6 +414,7 @@
     <Content Include="PageVeterinarias.aspx" />
     <Content Include="recursos\css\animate.min.css" />
     <Content Include="recursos\css\bootstrap.min.css" />
+    <Content Include="recursos\css\chatvet.css" />
     <Content Include="recursos\css\flaticon.css" />
     <Content Include="recursos\css\fontawesome-all.min.css" />
     <Content Include="recursos\css\magnific-popup.css" />

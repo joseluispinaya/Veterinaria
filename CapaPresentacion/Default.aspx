@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="recursos/css/slick.css">
     <link rel="stylesheet" href="recursos/css/nice-select.css">
     <link rel="stylesheet" href="recursos/css/style.css">
+    <link rel="stylesheet" href="recursos/css/chatvet.css">
 
     <style>
         .gmapsz {
@@ -462,9 +463,36 @@
         <!-- Footer End-->
     </footer>
     <!-- Scroll Up -->
-    <div id="back-top" >
+    <%--<div id="back-top" >
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
-    </div>
+    </div>--%>
+
+
+    <button id="chatButton"><i class="fab fa-reddit-alien"></i> Chat</button>
+
+    <!-- Chatbot -->
+        <div class="chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+            <div class="chat-header">
+                Chatbot de Adopción de Mascotas
+                <button id="closeChat">✖</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot-message visible">
+                    ¡Hola! ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
+                <button id="btnvoz">
+                    <i class="fas fa-microphone-slash"></i>
+                </button>
+                <button id="btnenviar">
+                    <!-- <span id="btn-text">Enviar</span> -->
+                    <i id="btn-icon" class="fas fa-paper-plane"></i>
+                    <span id="btn-loading">Cargando...</span>
+                </button>
+            </div>
+        </div>
 
     <!-- JS here -->
     
@@ -498,6 +526,7 @@
     <!-- Jquery Plugins, main Jquery -->	
     <script src="recursos/js/plugins.js"></script>
     <script src="recursos/js/main.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="js/Default.js" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>
     </body>
