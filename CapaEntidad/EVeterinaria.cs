@@ -23,6 +23,13 @@ namespace CapaEntidad
         public string FechaRegistro { get; set; }
         public DateTime VFechaRegistro { get; set; }
 
+        //nuevo campo para pdf
+        public string DocumentoPdf { get; set; }
+        public bool OpcionPdf => !string.IsNullOrEmpty(DocumentoPdf);
+        public string DocMostrar => string.IsNullOrEmpty(DocumentoPdf)
+            ? $"/Archivopdf/VeteSinPdf.pdf"
+            : DocumentoPdf;
+
         public string ImageFullVete => string.IsNullOrEmpty(ImagenLogo)
             ? $"/Imagenes/sinimagen.png"
             : ImagenLogo;

@@ -1,12 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageVeterinarias.aspx.cs" Inherits="CapaPresentacion.PageVeterinarias" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterAdmin/AdminVet.Master" AutoEventWireup="true" CodeBehind="VeterinariasAd.aspx.cs" Inherits="CapaPresentacion.MasterAdmin.VeterinariasAd" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="assets/inpfile.css" rel="stylesheet"/>
+    <link href="../assets/inpfile.css" rel="stylesheet" />
 
     <style>
         .nav.nav-tabs + .tab-content {
             margin-bottom: 10px !important;
             padding: 20px !important; /* Ajusta el valor de padding según lo necesites */
         }
+
         .buttons-excel {
             color: #fff !important;
             background-color: #28a745 !important;
@@ -126,7 +127,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group text-center">
-                                            <img id="imgLogoVet" src="Imagenes/sinimagen.png" alt="Foto usuario" style="height: 120px; max-width: 120px; border-radius: 50%;">
+                                            <img id="imgLogoVet" src="../Imagenes/sinimagen.png" alt="Foto usuario" style="height: 120px; max-width: 120px; border-radius: 50%;">
                                         </div>
 
                                         <div class="form-group text-center m-t-30">
@@ -177,7 +178,6 @@
         </div>
     </div>
 </div>
-
     <div class="modal fade bs-example-modal-lg" id="modalgeorefe" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -239,7 +239,6 @@
 
                     <div class="form-group text-center">
                         <iframe id="verPdf" style="width: 90%; height: 300px; border: none;"></iframe>
-                        <%--<iframe id="verPdf" style="width: 100%; height: 300px; border: none;"></iframe>--%>
                     </div>
                 </div>
             </div>
@@ -254,18 +253,6 @@
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="footer" runat="server">
-
-    <script src="js/PageVeterinarias.js" type="text/javascript"></script>
+    <script src="jsadm/VeterinariasAd.js" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>
-
-    <%--<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap&libraries=places">
-    </script>--%>
-
-    <%--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>--%>
-    <%--<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&libraries=places&callback=initMap"></script>--%>
-
-    
-    <%--<script src="assets/plugins/gmaps/gmaps.min.js"></script>--%>
-    
 </asp:Content>

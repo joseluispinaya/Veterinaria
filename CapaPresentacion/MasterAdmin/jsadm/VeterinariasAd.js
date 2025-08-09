@@ -81,7 +81,7 @@ function listaVeterinarias() {
     table = $("#tbVeterina").DataTable({
         responsive: true,
         "ajax": {
-            "url": 'PageVeterinarias.aspx/ObtenerVeterinarias',
+            "url": '/PageVeterinarias.aspx/ObtenerVeterinarias',
             "type": "POST",
             "contentType": "application/json; charset=utf-8",
             "dataType": "json",
@@ -171,7 +171,7 @@ $("#tbVeterina tbody").on("click", ".btn-editar", function (e) {
     $("#txtlatitud").val(modelo.Latitud);
     $("#txtlongitud").val(modelo.Longitud);
 
-    $("#imgLogoVet").attr("src", modelo.ImageFullVete == "" ? "Imagenes/sinimagen.png" : modelo.ImageFullVete);
+    $("#imgLogoVet").attr("src", modelo.ImageFullVete == "" ? "/Imagenes/sinimagen.png" : modelo.ImageFullVete);
 
     //$("#cboEstado").val(modelo.Activo == true ? 1 : 0);
     $("#cboEstado").val(modelo.Activo ? 1 : 0);
@@ -209,7 +209,7 @@ function limpiarDatos() {
     $("#txtDireccion").val("");
     $("#txtlatitud").val("");
     $("#txtlongitud").val("");
-    $('#imgLogoVet').attr('src', "Imagenes/sinimagen.png");
+    $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
 
     $("#txtFotoV").val("");
     $(".custom-file-label").text('Ningún archivo seleccionado');
@@ -220,7 +220,7 @@ function mostrarImagenSeleccionada(input) {
     let reader = new FileReader();
 
     reader.onload = (e) => $('#imgLogoVet').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgLogoVet').attr('src', "Imagenes/sinimagen.png");
+    file ? reader.readAsDataURL(file) : $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
 
     let fileName = file ? file.name : 'Ningún archivo seleccionado';
     $(input).next('.labelfoto').text(fileName);
@@ -234,7 +234,7 @@ $('#txtFotoV').change(function () {
 function sendDataToServer(request) {
     $.ajax({
         type: "POST",
-        url: "PageVeterinarias.aspx/Guardar",
+        url: "/PageVeterinarias.aspx/Guardar",
         data: JSON.stringify(request),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -317,6 +317,93 @@ function registerDataAjax() {
     }
 }
 
+function updaDataToServer(request) {
+    $.ajax({
+        type: "POST",
+        url: "/PageVeterinarias.aspx/ActualizarVet",
+        data: JSON.stringify(request),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            $("#laodvet").LoadingOverlay("show");
+        },
+        success: function (response) {
+            $("#laodvet").LoadingOverlay("hide");
+            if (response.d.Estado) {
+                listaVeterinarias();
+                limpiarDatos();
+                //  Mostrar el tab "lista Veterinaria"
+                $('#home-tab').tab('show');
+                swal("Mensaje", response.d.Mensaje, "success");
+            } else {
+                swal("Mensaje", response.d.Mensaje, "warning");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $("#laodvet").LoadingOverlay("hide");
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        complete: function () {
+            // Rehabilitar el botón después de que la llamada AJAX se complete (éxito o error)
+            $('#btnGuardarVet').prop('disabled', false);
+        }
+    });
+}
+
+function editarDataAjaxUi() {
+    var fileInput = document.getElementById('txtFotoV');
+    var file = fileInput.files[0];
+
+    const modelo = structuredClone(MODELO_BASE);
+    modelo["IdVeterinaria"] = parseInt($("#txtIdVeterina").val());
+    modelo["NombreVeterinaria"] = $("#txtNombrevete").val();
+    modelo["Propietario"] = $("#txtPropietario").val();
+    modelo["Correo"] = $("#txtCorreo").val();
+    modelo["Direccion"] = $("#txtDireccion").val();
+    modelo["Celular"] = $("#txtCelular").val();
+    modelo["DiasAtencion"] = $("#txtDias").val();
+    modelo["Horarios"] = $("#txtHorarios").val();
+    modelo["Latitud"] = parseFloat(parseFloat($("#txtlatitud").val()).toFixed(6));
+    modelo["Longitud"] = parseFloat(parseFloat($("#txtlongitud").val()).toFixed(6));
+    modelo["Activo"] = ($("#cboEstado").val() == "1" ? true : false);
+    //modelo["Latitud"] = parseFloat($("#txtlatitud").val());
+    //modelo["Longitud"] = parseFloat($("#txtlongitud").val());
+
+    if (file) {
+
+        var maxSize = 2 * 1024 * 1024; // 2 MB en bytes
+        if (file.size > maxSize) {
+            swal("Mensaje", "La imagen seleccionada es demasiado grande max 1.5 Mb.", "warning");
+            $('#btnGuardarVet').prop('disabled', false);
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var arrayBuffer = e.target.result;
+            var bytes = new Uint8Array(arrayBuffer);
+
+            var request = {
+                oVeterinaria: modelo,
+                imageBytes: Array.from(bytes)
+            };
+
+            updaDataToServer(request);
+        };
+
+        reader.readAsArrayBuffer(file);
+    } else {
+        // Si no se selecciona ningún archivo, envía un valor nulo o vacío para imageBytes
+        var request = {
+            oVeterinaria: modelo,
+            imageBytes: null // o cualquier otro valor que indique que no se envió ningún archivo
+        };
+
+        updaDataToServer(request);
+    }
+}
+
 $('#btnModalGeo').on('click', function () {
     $("#modalgeorefe").modal("show");
 })
@@ -372,8 +459,9 @@ $('#btnGuardarVet').on('click', function () {
         //swal("Mensaje", "Guardado.", "success")
         registerDataAjax();
     } else {
-        swal("Mensaje", "Falta para Actualizar personal.", "warning")
-        //editarDataAjaxU();
+        //swal("Mensaje", "Falta para Actualizar personal.", "warning")
+        //$('#btnGuardarVet').prop('disabled', false);
+        editarDataAjaxUi();
     }
 })
 
@@ -389,11 +477,11 @@ function mostrarPdfSeleccionada(input) {
         } else {
             swal("Mensaje", "El archivo seleccionado es demasiado grande, máximo 4 MB.", "warning");
             $('#txtpdf').val('');
-            $('#verPdf').attr('src', "Archivopdf/VeteSinPdf.pdf");
+            $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
             $(input).next('.labelpdf').text('Ningún archivo seleccionado');
         }
     } else {
-        $('#verPdf').attr('src', "Archivopdf/VeteSinPdf.pdf");
+        $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
         $('#txtpdf').val('');
         swal("Mensaje", "Debe seleccionar un archivo PDF válido.", "warning");
         $(input).next('.labelpdf').text('Ningún archivo seleccionado'); // Restablecer el label
@@ -418,7 +506,7 @@ $("#tbVeterina tbody").on("click", ".btn-agregar-pdf", function (e) {
     $("#myLargeModalLabelpdf").text("Veterinaria: " + model.NombreVeterinaria);
     $("#txtIdVeterinaPdf").val(model.IdVeterinaria);
     $('#txtpdf').val('');
-    $('#verPdf').attr('src', "Archivopdf/VeteSinPdf.pdf");
+    $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
     $(".labelpdf").text('Ningún archivo seleccionado');
 
     $("#modalpdf").modal("show");
@@ -439,7 +527,7 @@ $("#tbVeterina tbody").on("click", ".btn-editar-pdf", function (e) {
     $("#myLargeModalLabelpdf").text("Veterinaria: " + model.NombreVeterinaria);
     $("#txtIdVeterinaPdf").val(model.IdVeterinaria);
 
-    $("#verPdf").attr("src", model.DocMostrar || "Archivopdf/VeteSinPdf.pdf");
+    $("#verPdf").attr("src", model.DocMostrar || "/Archivopdf/VeteSinPdf.pdf");
     //$("#verPdf").attr("src", model.DocMostrar == "" ? "Archivopdf/VeteSinPdf.pdf" : model.DocMostrar);
     $(".labelpdf").text('Ningún archivo seleccionado');
     $('#txtpdf').val('');
@@ -472,7 +560,7 @@ function registerPdfAjaxP() {
 
             $.ajax({
                 type: "POST",
-                url: "PageVeterinarias.aspx/ActualizarPdf",
+                url: "/PageVeterinarias.aspx/ActualizarPdf",
                 data: JSON.stringify(request),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

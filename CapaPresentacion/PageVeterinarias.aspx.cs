@@ -86,5 +86,126 @@ namespace CapaPresentacion
                 };
             }
         }
+
+        [WebMethod]
+        public static Respuesta<bool> ActualizarVet(EVeterinaria oVeterinaria, byte[] imageBytes)
+        {
+            try
+            {
+                // Validar que el usuario es correcto
+                if (oVeterinaria == null || oVeterinaria.IdVeterinaria <= 0)
+                {
+                    return new Respuesta<bool>() { Estado = false, Mensaje = "Datos de veterinaria inválidos" };
+                }
+
+                // Obtener el usuario existente
+                Respuesta<List<EVeterinaria>> Lista = NVeterinaria.GetInstance().ObtenerVeterinarias();
+                var listaUsuarios = Lista.Data;
+                var item = listaUsuarios.FirstOrDefault(x => x.IdVeterinaria == oVeterinaria.IdVeterinaria);
+                if (item == null)
+                {
+                    return new Respuesta<bool>() { Estado = false, Mensaje = "veterinaria no encontrado" };
+                }
+
+                // Manejar la imagen, si se proporciona una nueva
+                string imageUrl = item.ImagenLogo;  // Mantener la foto actual por defecto
+
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    using (var stream = new MemoryStream(imageBytes))
+                    {
+                        string folder = "/Imagenes/";
+                        string newImageUrl = Utilidadesj.GetInstance().UploadPhotoA(stream, folder);
+
+                        if (!string.IsNullOrEmpty(newImageUrl))
+                        {
+                            // Eliminar la imagen anterior si existe
+                            if (!string.IsNullOrEmpty(item.ImagenLogo))
+                            {
+                                string oldImagePath = HttpContext.Current.Server.MapPath(item.ImagenLogo);
+                                if (File.Exists(oldImagePath))
+                                {
+                                    File.Delete(oldImagePath);
+                                }
+                            }
+                            imageUrl = newImageUrl;
+                        }
+                    }
+                }
+
+                // Actualizar los datos del usuario
+                item.IdVeterinaria = oVeterinaria.IdVeterinaria;
+                item.ImagenLogo = imageUrl;
+                item.NombreVeterinaria = oVeterinaria.NombreVeterinaria;
+                item.Propietario = oVeterinaria.Propietario;
+                item.Correo = oVeterinaria.Correo;
+                item.Direccion = oVeterinaria.Direccion;
+                item.Celular = oVeterinaria.Celular;
+                item.DiasAtencion = oVeterinaria.DiasAtencion;
+                item.Horarios = oVeterinaria.Horarios;
+                item.Latitud = oVeterinaria.Latitud;
+                item.Longitud = oVeterinaria.Longitud;
+                item.Activo = oVeterinaria.Activo;
+
+                // Guardar cambios
+                Respuesta<bool> respuesta = NVeterinaria.GetInstance().ModificarVeterinaria(item);
+
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<bool> ActualizarPdf(int IdVeterinaria, byte[] pdfBytes)
+        {
+            try
+            {
+                // Validar que el usuario es correcto
+                if (IdVeterinaria <= 0)
+                {
+                    return new Respuesta<bool>() { Estado = false, Mensaje = "Datos inválidos" };
+                }
+                Respuesta<List<EVeterinaria>> Lista = NVeterinaria.GetInstance().ObtenerVeterinarias();
+                var listaVett = Lista.Data;
+
+                var oVeterinaria = listaVett.FirstOrDefault(x => x.IdVeterinaria == IdVeterinaria);
+                if (oVeterinaria == null)
+                {
+                    return new Respuesta<bool>() { Estado = false, Mensaje = "No se encontró la veterinaria" };
+                }
+                string docpdf = oVeterinaria.DocumentoPdf;
+                if (pdfBytes != null && pdfBytes.Length > 0)
+                {
+                    using (var stream = new MemoryStream(pdfBytes))
+                    {
+                        string folder = "/Archivopdf/";
+                        string newPdf = Utilidadesj.GetInstance().UploadPdf(stream, folder);
+
+                        if (!string.IsNullOrEmpty(newPdf))
+                        {
+                            // Eliminar el pdf anterior si existe
+                            if (!string.IsNullOrEmpty(oVeterinaria.DocumentoPdf))
+                            {
+                                string oldImagePath = HttpContext.Current.Server.MapPath(oVeterinaria.DocumentoPdf);
+                                if (File.Exists(oldImagePath))
+                                {
+                                    File.Delete(oldImagePath);
+                                }
+                            }
+                            docpdf = newPdf;
+                        }
+                    }
+                }
+                Respuesta<bool> respuesta = NVeterinaria.GetInstance().ActualizarDocumento(IdVeterinaria, docpdf);
+                return respuesta;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
     }
 }

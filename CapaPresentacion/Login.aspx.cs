@@ -22,6 +22,17 @@ namespace CapaPresentacion
         {
             try
             {
+                bool esAdmin = ValidarAdmin(Usuario);
+                if (!esAdmin)
+                {
+                    return new Respuesta<EUsuario>
+                    {
+                        Estado = false,
+                        Valor = "admin",
+                        Mensaje = "Debe validar su cuenta revise su correo"
+                    };
+                }
+
                 var tokenSesion = Guid.NewGuid().ToString();
                 var ClaveEncri = Utilidadesj.GetInstance().ConvertirSha256(Clave);
                 var obj = NUsuario.GetInstance().LoginUsuarios(Usuario, ClaveEncri, tokenSesion);
@@ -32,6 +43,7 @@ namespace CapaPresentacion
                     return new Respuesta<EUsuario>
                     {
                         Estado = false,
+                        Valor = "",
                         Mensaje = "Credenciales incorrectas o usuario no encontrado"
                     };
                 }
@@ -50,6 +62,49 @@ namespace CapaPresentacion
             catch (Exception ex)
             {
                 return new Respuesta<EUsuario>
+                {
+                    Estado = false,
+                    Valor = "",
+                    Mensaje = "Ocurrió un error: " + ex.Message
+                };
+            }
+        }
+
+        private static bool ValidarAdmin(string correo)
+        {
+            try
+            {
+                Respuesta<List<EUsuario>> Lista = NUsuario.GetInstance().ObtenerUsuarios();
+                var listaUsuarios = Lista.Data;
+
+                var item = listaUsuarios.FirstOrDefault(x => x.Correo == correo);
+                if (item == null)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+                // Si ocurre un error en el envío del correo, retornar false
+                return false;
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<EAdministrador> LogeoAdmin(string Usuario, string Clave)
+        {
+            try
+            {
+                var obj = NUsuario.GetInstance().LoginAdmin(Usuario, Clave);
+
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<EAdministrador>
                 {
                     Estado = false,
                     Valor = "",

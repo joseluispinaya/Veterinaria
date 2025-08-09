@@ -147,13 +147,13 @@
                     <div class="cl-xl-7 col-lg-8 col-md-10">
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-70">
-                            <span>Oure recent news</span>
-                            <h2>Our Recent Blog</h2>
+                            <%--<span>Oure recent news</span>--%>
+                            <h2>Veterinarias</h2>
                         </div> 
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-6">
+                <div class="row" id="listaVet">
+                    <%--<div class="col-xl-4 col-lg-4 col-md-6">
                         <div class="single-blogs mb-30">
                             <div class="blog-img">
                                 <img src="recursos/img/gallery/blog1.png" alt="">
@@ -197,7 +197,7 @@
                                 <a href="#" class="read-more1">Read more</a>
                             </div>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>
@@ -207,80 +207,60 @@
             <div class="container">
                <div class="row">
                   <div class="col-lg-8 posts-list">
-                      <h4 class="m-t-0 m-b-15">Seleccione su Ubicacion</h4>
-                            <div id="mapaz" class="gmapsz"></div>
 
                     <div class="single-post">
                         <div class="feature-img">
-                           <img class="img-fluid" src="recursos/img/blog/single_blog_1.png" alt="">
+                            <div id="mapaz" class="gmapsz"></div>
                         </div>
                         <div class="blog_details">
-                           <h2>Second divided from form fish beast made every of seas
-                              all gathered us saying he our
+                           <h2>Ubicacion de las veterinarias registradas en nuestro sistema integral
                            </h2>
                            <ul class="blog-info-link mt-3 mb-4">
-                              <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
-                              <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                              <li><a href="#"><i class="fa fa-user"></i> Salud, Viajes</a></li>
+                              <li><a href="#"><i class="fa fa-comments"></i> 03 Comentarios</a></li>
                            </ul>
-                           <p class="excert">
-                              MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                              should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                              fraction of the camp price. However, who has the willpower
-                           </p>
                         </div>
                      </div>
 
-                     <div class="blog-author">
-                        <div class="media align-items-center">
-                           <img src="recursos/img/blog/author.png" alt="">
-                           <div class="media-body">
-                              <a href="#">
-                                 <h4>Harvard milan</h4>
-                              </a>
-                              <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
-                                 our dominion twon Second divided from</p>
-                           </div>
-                        </div>
-                     </div>
                   </div>
                   <div class="col-lg-4">
                      <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget post_category_widget">
-                           <h4 class="widget_title">Category</h4>
+                           <h4 class="widget_title">Servicios</h4>
                            <ul class="list cat-list">
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Resaurant food</p>
-                                    <p>(37)</p>
+                                    <p>Farmacia</p>
+                                    <p>...</p>
                                  </a>
                               </li>
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Travel news</p>
-                                    <p>(10)</p>
+                                    <p>Internado</p>
+                                    <p>...</p>
                                  </a>
                               </li>
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Modern technology</p>
-                                    <p>(03)</p>
+                                    <p>Cirugias</p>
+                                    <p>...</p>
                                  </a>
                               </li>
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Product</p>
-                                    <p>(11)</p>
+                                    <p>Desparasitacion</p>
+                                    <p>...</p>
                                  </a>
                               </li>
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Inspiration</p>
-                                    <p>(21)</p>
+                                    <p>Vacunacion</p>
+                                    <p>...</p>
                                  </a>
                               </li>
                               <li>
                                  <a href="#" class="d-flex">
-                                    <p>Health Care</p>
+                                    <p>Estetica canina</p>
                                     <p>(21)</p>
                                  </a>
                               </li>
@@ -306,12 +286,12 @@
                                     <div class="testimonial-founder">
                                         <div class="founder-img mb-40">
                                             <img src="recursos/img/gallery/testi-logo.png" alt="">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
+                                            <span>Alison Bautista</span>
+                                            <p>Creadora Responsable</p>
                                         </div>
                                     </div>
                                     <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                        <p>“Plataforma para veterinaria. Nuestro sistema te permite gestionar ventas de medicamentos, alimentos y accesorios para mascotas, además de llevar un control del historial clínico de cada paciente.”</p>
                                     </div>
                                 </div>
                             </div>
@@ -483,18 +463,71 @@
             </div>
             <div class="chat-input">
                 <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
-                <button id="btnvoz">
+                <%--<button id="btnvoz">
                     <i class="fas fa-microphone-slash"></i>
-                </button>
+                </button>--%>
                 <button id="btnenviar">
-                    <!-- <span id="btn-text">Enviar</span> -->
                     <i id="btn-icon" class="fas fa-paper-plane"></i>
-                    <span id="btn-loading">Cargando...</span>
+                    <span id="btn-loading">...</span>
                 </button>
             </div>
         </div>
 
     <!-- JS here -->
+
+    
+
+    <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="miModalLabel">Título del Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <h6><i class="fa fa-certificate text-primary"></i>This is header 02</h6>
+                            <%--<h4 class="mb-3"><i class="fa fa-certificate text-primary me-3"></i>Definition</h4>--%>
+                            <span id="defini">hkjhkjhkjhkh
+                            </span>
+
+                            <h6 class="mt-3"><i class="fa fa-certificate text-primary"></i>This is header 01</h6>
+                            <!-- <h5 class="mt-3 mb-2"><i class="fa fa-certificate text-primary me-3"></i>Specification</h5> -->
+                            <p class="excert">etiqueta para la informacion</p>
+
+                            <p class="mb-3" id="specifi">
+                            </p>
+
+                            <h6><i class="fa fa-certificate text-primary"></i>This is header 03</h6>
+
+                            <p class="mb-2" id="packi">
+                                indoododod
+                            </p>
+
+                        </div>
+                        <div class="col-sm-5 text-center">
+                            <h5 class="mb-3" id="typesa">sfdfsdfsdfsdf</h5>
+
+                            <img id="imgUsuarioMx" src="recursos/img/gallery/blog1.png" alt="Foto usuario"
+                                style="height: 250px; max-width: 250px;">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="genric-btn warning circle" data-dismiss="modal">Cerrar</button>
+                    <%--<button type="button" class="btn btn-primary">Guardar cambios</button>--%>
+                </div>
+
+            </div>
+        </div>
+    </div>
     
     <script src="recursos/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -527,7 +560,7 @@
     <script src="recursos/js/plugins.js"></script>
     <script src="recursos/js/main.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="js/Default.js" type="text/javascript"></script>
+    <script src="js/DefaultOrig.js" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1HcfGOeusxinFBpjXsMccjQxCtxRrV4&loading=async&callback=initMap"></script>
     </body>
 </html>

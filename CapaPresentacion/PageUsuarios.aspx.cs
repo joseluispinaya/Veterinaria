@@ -64,6 +64,16 @@ namespace CapaPresentacion
         {
             try
             {
+                // Validar el número máximo
+                if (ValidarSoloDosUsuarios(oUsuario.IdVeterinaria))
+                {
+                    return new Respuesta<bool>
+                    {
+                        Estado = false,
+                        Mensaje = "La veterinaria ya tiene el número máximo de usuarios permitidos (2)."
+                    };
+                }
+
                 // Instancia de Utilidadesj para evitar múltiples llamadas a getInstance()
                 var utilidades = Utilidadesj.GetInstance();
 
@@ -101,12 +111,32 @@ namespace CapaPresentacion
                 bool resultadoRegistro = respuesta.Estado;
                 //return respuesta;
 
+                string resw = string.Empty;
+
+                if (resultadoRegistro)
+                {
+                    string fechaActual = DateTime.Now.ToString("dd/MM/yyyy");
+                    string nombreSistema = "Sistema Integrado de veterinarias";
+
+                    string sms = $"{fechaActual}\n" +
+                     $"Credenciales de acceso:\n" +
+                     $"Usuario: {obj.Correo}\n" +
+                     $"Clave: {claveGenerada}\n\n" +
+                     $"Sistema: {nombreSistema}\n" +
+                     $"Por favor guarde esta información de forma segura.";
+
+                    bool enviado = utilidades.EnviarMensaje(obj.Celular, sms);
+                    resw = enviado ? "Se envió usuario y clave a su numero de whatsapp." : "Error no se pudo enviar el sms";
+
+                }
                 // Crear respuesta con el resultado del registro
                 return new Respuesta<bool>
                 {
                     Estado = resultadoRegistro,
-                    Valor = resultadoRegistro ? claveGenerada : "",
-                    Mensaje = resultadoRegistro ? "Registro exitoso. Se envió la clave al correo." : "Error al registrar. Intente con otro correo."
+                    //Valor = resultadoRegistro ? claveGenerada : "",
+                    Mensaje = resultadoRegistro
+                        ? $"Registro exitoso. {resw}"
+                        : "Error al registrar. Intente con otro correo."
                 };
             }
             catch (Exception ex)
@@ -118,6 +148,77 @@ namespace CapaPresentacion
                     Mensaje = "Ocurrió un error: " + ex.Message
                 };
             }
+        }
+
+        private static bool ValidarSoloDosUsuarios(int IdVeterinaria)
+        {
+            try
+            {
+                var respuesta = NUsuario.GetInstance().ObtenerUsuarios();
+
+                if (respuesta.Estado && respuesta.Data != null)
+                {
+                    // Filtrar usuarios de la veterinaria 
+                    var usuariosVeterinaria = respuesta.Data
+                        .Where(u => u.IdVeterinaria == IdVeterinaria)
+                        .ToList();
+
+                    // Verificar si ya tiene 2 o más usuarios
+                    return usuariosVeterinaria.Count >= 2;
+                }
+
+                // Si no se pudo obtener la lista correctamente, asumimos que no tiene 2 usuarios aún
+                return false;
+            }
+            catch (Exception)
+            {
+                // En caso de error, asumir que no se puede validar
+                return false;
+            }
+        }
+
+        [WebMethod]
+        public static Respuesta<string> EnvioSms(string celular, string correo)
+        {
+
+            try
+            {
+                var utilidades = Utilidadesj.GetInstance();
+                string claveGenerada = utilidades.GenerarClave();
+                string claveEncriptada = utilidades.ConvertirSha256(claveGenerada);
+
+                string fechaActual = DateTime.Now.ToString("dd/MM/yyyy");
+                string nombreSistema = "Sistema Integrado de veterinarias";
+
+                string sms = $"{fechaActual}\n" +
+                 $"Credenciales de acceso:\n" +
+                 $"Usuario: {correo}\n" +
+                 $"Clave: {claveGenerada}\n\n" +
+                 $"Sistema: {nombreSistema}\n" +
+                 $"Por favor guarde esta información de forma segura.";
+
+                string smsor = $"Estimado usuario:\n\nSe han generado sus credenciales de acceso:\nUsuario: {correo}\nClave: {claveGenerada}\n\nPor favor guarde esta información de forma segura.";
+                bool enviado = utilidades.EnviarMensaje(celular, sms);
+
+                return new Respuesta<string>()
+                {
+                    Estado = enviado,
+                    Valor = enviado ? claveGenerada : "",
+                    Mensaje = enviado ? "Se envió correo y clave a su numero de whatsap." : "Error no se pudo enviar el sms",
+                    Data = enviado ? claveEncriptada : ""
+                };
+            }
+            catch (Exception)
+            {
+                return new Respuesta<string>()
+                {
+                    Estado = false,
+                    Valor = "Error en el catch",
+                    Mensaje = "Ocurrio un error catch intente mas tarde",
+                    Data = "error catch"
+                };
+            }
+
         }
     }
 }

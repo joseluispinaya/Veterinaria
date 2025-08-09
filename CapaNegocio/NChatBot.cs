@@ -26,14 +26,19 @@ namespace CapaNegocio
         }
         #endregion
 
-        public Respuesta<List<TablasEsquema>> ObtenerEsquemaBDNuevo()
+        public Respuesta<List<TablasEsquema>> EsquemaBaseDatos()
         {
-            return DChatBot.GetInstance().ObtenerEsquemaBDNuevo();
+            return DChatBot.GetInstance().EsquemaBaseDatos();
         }
 
-        public Respuesta<DataTable> EjecutarConsultaLibre(string consultaSql)
+        public Respuesta<DataTable> EjecutarSentenciaSql(string consultaSql)
         {
-            return DChatBot.GetInstance().EjecutarConsultaLibre(consultaSql);
+            return DChatBot.GetInstance().EjecutarSentenciaSql(consultaSql);
+        }
+
+        public Respuesta<List<TablasEsquema>> EsquemaBaseDatosServer()
+        {
+            return DChatBot.GetInstance().EsquemaBaseDatosServer();
         }
     }
 }

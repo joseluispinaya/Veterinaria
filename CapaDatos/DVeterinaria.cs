@@ -74,6 +74,53 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<bool> ModificarVeterinaria(EVeterinaria oVeterinaria)
+        {
+            try
+            {
+                bool respuesta = false;
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_ModificarVeterinaria", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@IdVeterinaria", oVeterinaria.IdVeterinaria);
+                        cmd.Parameters.AddWithValue("@ImagenLogo", oVeterinaria.ImagenLogo);
+                        cmd.Parameters.AddWithValue("@NombreVeterinaria", oVeterinaria.NombreVeterinaria);
+                        cmd.Parameters.AddWithValue("@Propietario", oVeterinaria.Propietario);
+                        cmd.Parameters.AddWithValue("@Correo", oVeterinaria.Correo);
+                        cmd.Parameters.AddWithValue("@Direccion", oVeterinaria.Direccion);
+                        cmd.Parameters.AddWithValue("@Celular", oVeterinaria.Celular);
+                        cmd.Parameters.AddWithValue("@DiasAtencion", oVeterinaria.DiasAtencion);
+                        cmd.Parameters.AddWithValue("@Horarios", oVeterinaria.Horarios);
+                        cmd.Parameters.AddWithValue("@Latitud", oVeterinaria.Latitud);
+                        cmd.Parameters.AddWithValue("@Longitud", oVeterinaria.Longitud);
+                        cmd.Parameters.AddWithValue("@Activo", oVeterinaria.Activo);
+
+                        SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        respuesta = Convert.ToBoolean(outputParam.Value);
+                    }
+                }
+                return new Respuesta<bool>
+                {
+                    Estado = respuesta,
+                    Mensaje = respuesta ? "Se actualizo correctamente" : "Error al actualizar ingrese otro Correo"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
         public Respuesta<List<EVeterinaria>> ObtenerVeterinarias()
         {
             try
@@ -107,6 +154,7 @@ namespace CapaDatos
                                     Activo = Convert.ToBoolean(dr["Activo"]),
                                     FechaRegistro = Convert.ToDateTime(dr["FechaRegistro"].ToString()).ToString("dd/MM/yyyy"),
                                     VFechaRegistro = Convert.ToDateTime(dr["FechaRegistro"].ToString()),
+                                    DocumentoPdf = dr["DocumentoPdf"].ToString()
                                 });
                             }
                         }
@@ -128,6 +176,43 @@ namespace CapaDatos
                     Mensaje = "Ocurrió un error: " + ex.Message,
                     Data = null
                 };
+            }
+        }
+
+        public Respuesta<bool> ActualizarDocumento(int IdVeterinaria, string Pdf)
+        {
+            try
+            {
+                bool respuesta = false;
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_AddUpdatePdfVete", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@IdVeterinaria", IdVeterinaria);
+                        cmd.Parameters.AddWithValue("@DocumentoPdf", Pdf);
+
+                        SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        respuesta = Convert.ToBoolean(outputParam.Value);
+                    }
+                }
+                return new Respuesta<bool>
+                {
+                    Estado = respuesta,
+                    Mensaje = respuesta ? "Se Actualizo correctamente" : "Error al Actualizar intente mas tarde"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
             }
         }
     }

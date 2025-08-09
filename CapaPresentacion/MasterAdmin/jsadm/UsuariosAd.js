@@ -28,7 +28,7 @@ function listaUsuarios() {
     table = $("#tbUsuario").DataTable({
         responsive: true,
         "ajax": {
-            "url": 'PageUsuarios.aspx/ObtenerUsuarios',
+            "url": '/PageUsuarios.aspx/ObtenerUsuarios',
             "type": "POST",
             "contentType": "application/json; charset=utf-8",
             "dataType": "json",
@@ -96,7 +96,7 @@ function cargarVeterinarias() {
 
     $.ajax({
         type: "POST",
-        url: "PageVeterinarias.aspx/ObtenerVeterinarias",
+        url: "/PageVeterinarias.aspx/ObtenerVeterinarias",
         data: {},
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
@@ -122,7 +122,7 @@ function cargarRoles() {
 
     $.ajax({
         type: "POST",
-        url: "PageUsuarios.aspx/ObtenerRol",
+        url: "/PageUsuarios.aspx/ObtenerRol",
         data: {},
         contentType: 'application/json; charset=utf-8',
         dataType: "json",
@@ -148,7 +148,7 @@ function mostrarImagenSeleccionadaU(input) {
     let reader = new FileReader();
 
     reader.onload = (e) => $('#imgUsuarioReg').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgUsuarioReg').attr('src', "Imagenes/sinimagen.png");
+    file ? reader.readAsDataURL(file) : $('#imgUsuarioReg').attr('src', "/Imagenes/sinimagen.png");
 
     let fileName = file ? file.name : 'Ningún archivo seleccionado';
     $(input).next('.custom-file-label').text(fileName);
@@ -174,7 +174,7 @@ function mostrarModal(modelo, cboEstadoDeshabilitado = true) {
 
     Object.entries(campos).forEach(([id, valor]) => $("#" + id).val(valor));
 
-    $("#imgUsuarioReg").attr("src", modelo.ImageFull || "Imagenes/sinimagen.png");
+    $("#imgUsuarioReg").attr("src", modelo.ImageFull || "/Imagenes/sinimagen.png");
     $("#cboEstado").prop("disabled", cboEstadoDeshabilitado);
     $("#txtFotoUr").val("");
     $(".custom-file-label").text('Ningún archivo seleccionado');
@@ -204,7 +204,7 @@ $('#btnNuevoUsuar').on('click', function () {
 function sendDataToServerUsr(request) {
     $.ajax({
         type: "POST",
-        url: "PageUsuarios.aspx/Guardar",
+        url: "/PageUsuarios.aspx/Guardar",
         data: JSON.stringify(request),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -320,7 +320,53 @@ $('#btnGuardarCambios').on('click', function () {
         registerDataUser();
     } else {
         swal("Mensaje", "Falta para Actualizar personal.", "warning")
-        $('#btnGuardarCambios').prop('disabled', false);
         //editarDataAjaxU();
     }
+})
+
+function enviarSms() {
+
+    var request = {
+        celular: $("#txtcelularz").val().trim(),
+        correo: $("#txtCorreoz").val().trim()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/PageUsuarios.aspx/EnvioSms",
+        data: JSON.stringify(request),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            $("#loadwat").LoadingOverlay("show");
+        },
+        success: function (response) {
+            $("#loadwat").LoadingOverlay("hide");
+            if (response.d.Estado) {
+
+                $("#txtMensaje").val(response.d.Data);
+                let smss = `${response.d.Mensaje} Clave: ${response.d.Valor}`;
+                swal("Mensaje", smss, "success");
+                //swal("Mensaje", response.d.Mensaje, "success");
+            } else {
+                swal("Mensaje", response.d.Mensaje, "warning");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $("#loadwat").LoadingOverlay("hide");
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        complete: function () {
+            // Rehabilitar el botón después de que la llamada AJAX se complete (éxito o error)
+            $('#btnEnviar').prop('disabled', false);
+        }
+    });
+}
+
+$('#btnEnviar').on('click', function () {
+
+    // Deshabilitar el botón para evitar múltiples envíos
+    $('#btnEnviar').prop('disabled', true);
+
+    enviarSms();
 })

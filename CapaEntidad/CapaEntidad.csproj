@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnaEsquema.cs" />
+    <Compile Include="EAdministrador.cs" />
     <Compile Include="ECategoria.cs" />
     <Compile Include="EDetalleVenta.cs" />
     <Compile Include="EHistorialClinco.cs" />

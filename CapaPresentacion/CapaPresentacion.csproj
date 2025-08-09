@@ -44,6 +44,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -390,6 +394,7 @@
     <Content Include="Imgusers\logomas.png" />
     <Content Include="Inicio.aspx" />
     <Content Include="js\Default.js" />
+    <Content Include="js\DefaultOrig.js" />
     <Content Include="js\InicioP.js" />
     <Content Include="js\Login.js" />
     <Content Include="js\Mapapage.js" />
@@ -404,6 +409,12 @@
     <Content Include="js\PageVentaPru.js" />
     <Content Include="js\PageVeterinarias.js" />
     <Content Include="Login.aspx" />
+    <Content Include="MasterAdmin\InicioAdmin.aspx" />
+    <Content Include="MasterAdmin\jsadm\masteradm.js" />
+    <Content Include="MasterAdmin\jsadm\UsuariosAd.js" />
+    <Content Include="MasterAdmin\jsadm\VeterinariasAd.js" />
+    <Content Include="MasterAdmin\UsuariosAd.aspx" />
+    <Content Include="MasterAdmin\VeterinariasAd.aspx" />
     <Content Include="PageAddProducto.aspx" />
     <Content Include="PageClientes.aspx" />
     <Content Include="PageDetalleCliente.aspx" />
@@ -587,6 +598,34 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MasterAdmin\AdminVet.Master.cs">
+      <DependentUpon>AdminVet.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\AdminVet.Master.designer.cs">
+      <DependentUpon>AdminVet.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdmin\InicioAdmin.aspx.cs">
+      <DependentUpon>InicioAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\InicioAdmin.aspx.designer.cs">
+      <DependentUpon>InicioAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdmin\UsuariosAd.aspx.cs">
+      <DependentUpon>UsuariosAd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\UsuariosAd.aspx.designer.cs">
+      <DependentUpon>UsuariosAd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterAdmin\VeterinariasAd.aspx.cs">
+      <DependentUpon>VeterinariasAd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterAdmin\VeterinariasAd.aspx.designer.cs">
+      <DependentUpon>VeterinariasAd.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PageAddProducto.aspx.cs">
       <DependentUpon>PageAddProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -747,6 +786,8 @@
     <Content Include="assets\scss\_pages.scss" />
     <Content Include="assets\scss\_responsive.scss" />
     <Content Include="HomePage.Master" />
+    <Content Include="Archivopdf\VeteSinPdf.pdf" />
+    <Content Include="MasterAdmin\AdminVet.Master" />
     <None Include="packages.config" />
     <Content Include="recursos\css\style.map" />
     <Content Include="recursos\fonts\fa-brands-400.eot" />
@@ -809,6 +850,7 @@
       <Name>CapaNegocio</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

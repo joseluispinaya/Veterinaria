@@ -345,5 +345,68 @@ namespace CapaDatos
                 };
             }
         }
+
+        public Respuesta<EAdministrador> LoginAdmin(string Correo, string Clave)
+        {
+            try
+            {
+                EAdministrador obj = null;
+
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand comando = new SqlCommand("usp_LogeoAdmin", con))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        //comando.CommandTimeout = 30;
+                        comando.Parameters.AddWithValue("@Correo", Correo);
+                        comando.Parameters.AddWithValue("@Clave", Clave);
+
+                        con.Open();
+                        using (SqlDataReader dr = comando.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                obj = new EAdministrador
+                                {
+                                    IdAdmin = Convert.ToInt32(dr["IdAdmin"]),
+                                    Nombres = dr["Nombres"].ToString(),
+                                    Apellidos = dr["Apellidos"].ToString(),
+                                    Correo = dr["Correo"].ToString(),
+                                    Clave = dr["Clave"].ToString(),
+                                    Estado = Convert.ToBoolean(dr["Estado"])
+                                };
+                            }
+                        }
+                    }
+                }
+
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = obj != null,
+                    Data = obj,
+                    Mensaje = obj != null ? "Usuario obtenido correctamente" : "Credenciales incorrectas o usuario no encontrado"
+                };
+            }
+            catch (SqlException ex)
+            {
+                // Manejo de excepciones relacionadas con la base de datos
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = false,
+                    Mensaje = "Error en la base de datos: " + ex.Message,
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones generales
+                return new Respuesta<EAdministrador>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error inesperado: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
     }
 }

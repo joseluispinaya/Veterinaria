@@ -33,9 +33,19 @@ namespace CapaNegocio
             return DVeterinaria.GetInstance().RegistrarVeterinaria(oVeterinaria);
         }
 
+        public Respuesta<bool> ModificarVeterinaria(EVeterinaria oVeterinaria)
+        {
+            return DVeterinaria.GetInstance().ModificarVeterinaria(oVeterinaria);
+        }
+
         public Respuesta<List<EVeterinaria>> ObtenerVeterinarias()
         {
             return DVeterinaria.GetInstance().ObtenerVeterinarias();
+        }
+
+        public Respuesta<bool> ActualizarDocumento(int IdVeterinaria, string Pdf)
+        {
+            return DVeterinaria.GetInstance().ActualizarDocumento(IdVeterinaria, Pdf);
         }
     }
 }
