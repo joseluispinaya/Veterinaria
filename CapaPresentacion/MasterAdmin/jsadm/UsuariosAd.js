@@ -143,21 +143,78 @@ function cargarRoles() {
     });
 }
 
+// Función auxiliar para validar tipo de archivo
+function esImagenValida(file) {
+    return file && file.type.startsWith("image/");
+}
+
 function mostrarImagenSeleccionadaU(input) {
     let file = input.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e) => $('#imgUsuarioReg').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgUsuarioReg').attr('src', "/Imagenes/sinimagen.png");
+    // Si NO se seleccionó archivo (ej: presionaron "Cancelar")
+    if (!file) {
+        $('#imgUsuarioReg').attr('src', "/Imagenes/sinimagen.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        return;
+    }
 
-    let fileName = file ? file.name : 'Ningún archivo seleccionado';
-    $(input).next('.custom-file-label').text(fileName);
+    // Validación: si no es imagen, mostramos error
+    if (!esImagenValida(file)) {
+        swal("Error", "El archivo seleccionado no es una imagen válida.", "error");
+        $('#imgUsuarioReg').attr('src', "/Imagenes/sinimagen.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        input.value = ""; // Limpia el input de archivo
+        return;
+    }
+
+    // Si todo es válido → mostrar vista previa
+    reader.onload = (e) => $('#imgUsuarioReg').attr('src', e.target.result);
+    reader.readAsDataURL(file);
+
+    // Mostrar nombre del archivo
+    $(input).next('.custom-file-label').text(file.name);
+
+    //reader.onload = (e) => $('#imgUsuarioReg').attr('src', e.target.result);
+    //file ? reader.readAsDataURL(file) : $('#imgUsuarioReg').attr('src', "/Imagenes/sinimagen.png");
+
+    //let fileName = file ? file.name : 'Ningún archivo seleccionado';
+    //$(input).next('.custom-file-label').text(fileName);
 }
 
 $('#txtFotoUr').change(function () {
     mostrarImagenSeleccionadaU(this);
 });
 
+// validacion de datos
+$.fn.inputFilter = function (inputFilter) {
+    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function (e) { // Captura el evento como 'e'
+        if (inputFilter(this.value) || e.key === "Backspace" || e.key === " ") { // se usa 'e' en lugar de 'event'
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+            this.value = "";
+        }
+    });
+};
+
+$("#txtNombres").inputFilter(function (value) {
+    return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/u.test(value);
+});
+
+$("#txtApellidos").inputFilter(function (value) {
+    return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/u.test(value);
+});
+
+$("#txtCelular").inputFilter(function (value) {
+    return /^\d*$/.test(value) && value.length <= 8;
+});
+
+// fin de validacion
 function mostrarModal(modelo, cboEstadoDeshabilitado = true) {
     modelo = modelo ?? { ...MODELO_BASE };
 

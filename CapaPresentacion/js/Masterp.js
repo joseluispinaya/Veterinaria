@@ -94,7 +94,8 @@ async function obtenerDetalleUsuarioR(idUsu) {
                 if (usuarioL) {
                     var usuario = JSON.parse(usuarioL);
                     $("#nombreusuariome").append(usuario.Apellidos);
-                    $("#rolnomme").text(usuario.Rol.Descripcion);
+                    $("#rolnomme").text(usuario.Veterinaria.NombreVeterinaria);
+                    //$("#rolnomme").text(usuario.Rol.Descripcion);
                     $("#imgUsuarioMe").attr("src", usuario.ImageFull);
                     $("#imageUserMe").attr("src", usuario.ImageFull);
                     $("#rolusuariome").append(usuario.Rol.Descripcion);

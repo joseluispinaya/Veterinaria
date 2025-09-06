@@ -180,11 +180,10 @@ function actualizarTablaMascotas(mascotasList) {
             },
             {
                 defaultContent: '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                                '<button class="btn btn-info btn-detalle btn-sm mr-2"><i class="fas fa-address-book"></i></button>' +
-                                '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
+                                '<button class="btn btn-info btn-detalle btn-sm"><i class="fas fa-address-book"></i></button>',
                 orderable: false,
                 searchable: false,
-                width: "120px"
+                width: "80px"
             }
         ],
         order: [[0, "desc"]],

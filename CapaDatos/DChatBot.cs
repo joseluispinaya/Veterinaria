@@ -156,6 +156,68 @@ namespace CapaDatos
         //    }
         //}
 
+        public Respuesta<DataTable> EjecutarSentenciaSqlIa(string consultaSql)
+        {
+            try
+            {
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    con.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(consultaSql, con))
+                    {
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            DataTable resultado = new DataTable();
+                            da.Fill(resultado);
+
+                            // Log de depuración
+                            Console.WriteLine("Consulta ejecutada:");
+                            Console.WriteLine(consultaSql);
+                            Console.WriteLine("Filas recuperadas: " + resultado.Rows.Count);
+
+                            // Opcional: mostrar las columnas y primeras filas
+                            if (resultado.Rows.Count > 0)
+                            {
+                                Console.WriteLine("Columnas: " + string.Join(", ",
+                                    resultado.Columns.Cast<DataColumn>().Select(c => c.ColumnName)));
+
+                                foreach (DataRow row in resultado.Rows.Cast<DataRow>().Take(3)) // solo 3 filas máx
+                                {
+                                    Console.WriteLine(string.Join(" | ",
+                                        row.ItemArray.Select(v => v?.ToString() ?? "NULL")));
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("No se recuperaron filas.");
+                            }
+
+                            return new Respuesta<DataTable>()
+                            {
+                                Estado = true,
+                                Mensaje = "Consulta ejecutada correctamente.",
+                                Valor = null,
+                                Data = resultado
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ejecutando consulta: " + ex.Message);
+
+                return new Respuesta<DataTable>()
+                {
+                    Estado = false,
+                    Mensaje = "Error al ejecutar la consulta: " + ex.Message,
+                    Valor = null,
+                    Data = null
+                };
+            }
+        }
+
         public Respuesta<DataTable> EjecutarSentenciaSql(string consultaSql)
         {
             try
@@ -170,6 +232,9 @@ namespace CapaDatos
                         {
                             DataTable resultado = new DataTable();
                             da.Fill(resultado);
+
+                            //Console.WriteLine(consultaSql);
+                            //Console.WriteLine("Filas recuperadas: " + resultado.Rows.Count);
 
                             return new Respuesta<DataTable>()
                             {

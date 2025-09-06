@@ -43,15 +43,36 @@ function cargarCategorias() {
     });
 }
 
+function esImagen(file) {
+    return file && file.type.startsWith("image/");
+}
+
 function mostrarImagenSeleccionadaP(input) {
     let file = input.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e) => $('#imgProd').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+    // Si NO se seleccionó archivo (ej: presionaron "Cancelar")
+    if (!file) {
+        $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        return;
+    }
 
-    let fileName = file ? file.name : 'Ningún archivo seleccionado';
-    $(input).next('.custom-file-label').text(fileName);
+    // Validación: si no es imagen, mostramos error
+    if (!esImagen(file)) {
+        swal("Error", "El archivo seleccionado no es una imagen válida.", "error");
+        $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        input.value = ""; // Limpia el input de archivo
+        return;
+    }
+
+    // Si todo es válido → mostrar vista previa
+    reader.onload = (e) => $('#imgProd').attr('src', e.target.result);
+    reader.readAsDataURL(file);
+
+    // Mostrar nombre del archivo
+    $(input).next('.custom-file-label').text(file.name);
 }
 
 $('#txtFotoPror').change(function () {

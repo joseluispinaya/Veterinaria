@@ -2,6 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="assets/inpfile.css" rel="stylesheet"/>
     <style>
+        .buttons-excel{
+            color: #fff !important;
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+        }
+
         .sin-margin-bottom {
             margin-bottom: 0;
         }

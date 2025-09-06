@@ -31,6 +31,11 @@ namespace CapaNegocio
             return DChatBot.GetInstance().EsquemaBaseDatos();
         }
 
+        public Respuesta<DataTable> EjecutarSentenciaSqlIa(string consultaSql)
+        {
+            return DChatBot.GetInstance().EjecutarSentenciaSqlIa(consultaSql);
+        }
+
         public Respuesta<DataTable> EjecutarSentenciaSql(string consultaSql)
         {
             return DChatBot.GetInstance().EjecutarSentenciaSql(consultaSql);

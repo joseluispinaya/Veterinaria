@@ -57,11 +57,10 @@ function listaClientes() {
             { "data": "NumeroMascotas" },
             {
                 "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                    '<button class="btn btn-info btn-detalle btn-sm mr-2"><i class="fas fa-address-book"></i></button>' +
-                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
+                    '<button class="btn btn-info btn-detalle btn-sm"><i class="fas fa-address-book"></i></button>',
                 "orderable": false,
                 "searchable": false,
-                "width": "120px"
+                "width": "80px"
             }
         ],
         "order": [[0, "desc"]],
@@ -137,20 +136,19 @@ $("#tbPropiet tbody").on("click", ".btn-detalle", function (e) {
     //mostrarModal(model, false);
 })
 
-$("#tbPropiet tbody").on("click", ".btn-eliminar", function (e) {
-    e.preventDefault();
-    let filaSeleccionada;
+//$("#tbPropiet tbody").on("click", ".btn-eliminar", function (e) {
+//    e.preventDefault();
+//    let filaSeleccionada;
 
-    if ($(this).closest("tr").hasClass("child")) {
-        filaSeleccionada = $(this).closest("tr").prev();
-    } else {
-        filaSeleccionada = $(this).closest("tr");
-    }
+//    if ($(this).closest("tr").hasClass("child")) {
+//        filaSeleccionada = $(this).closest("tr").prev();
+//    } else {
+//        filaSeleccionada = $(this).closest("tr");
+//    }
 
-    const model = table.row(filaSeleccionada).data();
-    swal("Mensaje", "Se eliminara el ID: " + model.IdPropietario, "warning")
-    //mostrarModal(model, false);
-})
+//    const model = table.row(filaSeleccionada).data();
+//    swal("Mensaje", "Se eliminara el ID: " + model.IdPropietario, "warning")
+//})
 
 $('#btnNuevoPropie').on('click', function () {
     //$("#modalRegPro").modal("show");

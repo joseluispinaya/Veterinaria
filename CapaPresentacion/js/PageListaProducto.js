@@ -62,7 +62,10 @@ function listaProductos() {
         "columns": [
             { "data": "IdProducto", "visible": false, "searchable": false },
             {
-                "data": "ImageFulP", render: function (data) {
+                "data": "ImageFulP",
+                "orderable": false,
+                "searchable": false,
+                render: function (data) {
                     return `<img style="height:40px" src=${data} class="rounded mx-auto d-block"/>`
                 }
             },
@@ -81,11 +84,10 @@ function listaProductos() {
             },
             {
                 "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                    '<button class="btn btn-info btn-detalle btn-sm mr-2"><i class="fas fa-eye"></i></button>' +
-                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
+                    '<button class="btn btn-info btn-detalle btn-sm"><i class="fas fa-eye"></i></button>',
                 "orderable": false,
                 "searchable": false,
-                "width": "120px"
+                "width": "80px"
             }
         ],
         "order": [[0, "desc"]],
@@ -108,15 +110,37 @@ function listaProductos() {
     });
 }
 
+// Función auxiliar para validar tipo de archivo
+function esImagen(file) {
+    return file && file.type.startsWith("image/");
+}
+
 function mostrarImagenSeleccionadaP(input) {
     let file = input.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e) => $('#imgProd').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+    // Si NO se seleccionó archivo (ej: presionaron "Cancelar")
+    if (!file) {
+        $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        return;
+    }
 
-    let fileName = file ? file.name : 'Ningún archivo seleccionado';
-    $(input).next('.custom-file-label').text(fileName);
+    // Validación: si no es imagen, mostramos error
+    if (!esImagen(file)) {
+        swal("Error", "El archivo seleccionado no es una imagen válida.", "error");
+        $('#imgProd').attr('src', "Imageprodu/sinimagenpro.png");
+        $(input).next('.custom-file-label').text('Ningún archivo seleccionado');
+        input.value = ""; // Limpia el input de archivo
+        return;
+    }
+
+    // Si todo es válido → mostrar vista previa
+    reader.onload = (e) => $('#imgProd').attr('src', e.target.result);
+    reader.readAsDataURL(file);
+
+    // Mostrar nombre del archivo
+    $(input).next('.custom-file-label').text(file.name);
 }
 
 $('#txtFotoPror').change(function () {

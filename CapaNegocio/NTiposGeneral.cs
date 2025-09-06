@@ -37,5 +37,25 @@ namespace CapaNegocio
         {
             return DTiposGeneral.GetInstance().ListaServicios();
         }
+
+        public Respuesta<bool> RegistrarCategoria(ECategoria categoria)
+        {
+            return DTiposGeneral.GetInstance().RegistrarCategoria(categoria);
+        }
+
+        public Respuesta<bool> EditarCategoria(ECategoria categoria)
+        {
+            return DTiposGeneral.GetInstance().EditarCategoria(categoria);
+        }
+
+        public Respuesta<bool> RegistrarServicio(EServicio categoria)
+        {
+            return DTiposGeneral.GetInstance().RegistrarServicio(categoria);
+        }
+
+        public Respuesta<bool> EditarServicio(EServicio categoria)
+        {
+            return DTiposGeneral.GetInstance().EditarServicio(categoria);
+        }
     }
 }

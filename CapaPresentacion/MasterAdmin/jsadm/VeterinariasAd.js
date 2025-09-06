@@ -215,21 +215,74 @@ function limpiarDatos() {
     $(".custom-file-label").text('Ningún archivo seleccionado');
 }
 
+// Función auxiliar para validar tipo de archivo
+function esImagenValidave(file) {
+    return file && file.type.startsWith("image/");
+}
+
 function mostrarImagenSeleccionada(input) {
     let file = input.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e) => $('#imgLogoVet').attr('src', e.target.result);
-    file ? reader.readAsDataURL(file) : $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
+    // Si NO se seleccionó archivo (ej: presionaron "Cancelar")
+    if (!file) {
+        $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
+        $(input).next('.labelfoto').text('Ningún archivo seleccionado');
+        return;
+    }
 
-    let fileName = file ? file.name : 'Ningún archivo seleccionado';
-    $(input).next('.labelfoto').text(fileName);
+    // Validación: si no es imagen, mostramos error
+    if (!esImagenValidave(file)) {
+        swal("Error", "El archivo seleccionado no es una imagen válida.", "error");
+        $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
+        $(input).next('.labelfoto').text('Ningún archivo seleccionado');
+        input.value = ""; // Limpia el input de archivo
+        return;
+    }
+
+    // Si todo es válido → mostrar vista previa
+    reader.onload = (e) => $('#imgLogoVet').attr('src', e.target.result);
+    reader.readAsDataURL(file);
+
+    // Mostrar nombre del archivo
+    $(input).next('.labelfoto').text(file.name);
+
+    //reader.onload = (e) => $('#imgLogoVet').attr('src', e.target.result);
+    //file ? reader.readAsDataURL(file) : $('#imgLogoVet').attr('src', "/Imagenes/sinimagen.png");
+
+    //let fileName = file ? file.name : 'Ningún archivo seleccionado';
+    //$(input).next('.labelfoto').text(fileName);
 }
 
 $('#txtFotoV').change(function () {
     mostrarImagenSeleccionada(this);
 });
 
+// validacion de datos
+$.fn.inputFilter = function (inputFilter) {
+    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function (e) { // Captura el evento como 'e'
+        if (inputFilter(this.value) || e.key === "Backspace" || e.key === " ") { // se usa 'e' en lugar de 'event'
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+            this.value = "";
+        }
+    });
+};
+
+$("#txtPropietario").inputFilter(function (value) {
+    return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/u.test(value);
+});
+
+$("#txtCelular").inputFilter(function (value) {
+    return /^\d*$/.test(value) && value.length <= 8;
+});
+
+// fin de validacion
 
 function sendDataToServer(request) {
     $.ajax({
@@ -466,27 +519,69 @@ $('#btnGuardarVet').on('click', function () {
 })
 
 // add pdf
+
+function esPdfValida(file) {
+    return file && file.type === "application/pdf";
+}
+
+// Máximo 2 MB
+const TAMANO_MAXIMO = 4 * 1024 * 1024; // 4 MB en bytes
+
 function mostrarPdfSeleccionada(input) {
     let file = input.files[0];
 
-    if (file && file.type === "application/pdf") {
-        if (file.size <= (4 * 1024 * 1024)) {
-            let objectUrl = URL.createObjectURL(file);
-            $('#verPdf').attr('src', objectUrl);
-            $(input).next('.labelpdf').text(file.name); // Mostrar nombre solo si es válido
-        } else {
-            swal("Mensaje", "El archivo seleccionado es demasiado grande, máximo 4 MB.", "warning");
-            $('#txtpdf').val('');
-            $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
-            $(input).next('.labelpdf').text('Ningún archivo seleccionado');
-        }
-    } else {
+    // Si NO se seleccionó archivo (ej: presionaron "Cancelar")
+    if (!file) {
         $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
-        $('#txtpdf').val('');
-        swal("Mensaje", "Debe seleccionar un archivo PDF válido.", "warning");
         $(input).next('.labelpdf').text('Ningún archivo seleccionado'); // Restablecer el label
+        return;
     }
+
+    // Validación: si no es imagen, mostramos error
+    if (!esPdfValida(file)) {
+        swal("Error", "Debe seleccionar un archivo PDF válido.", "error");
+        $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
+        $(input).next('.labelpdf').text('Ningún archivo seleccionado');
+        input.value = ""; // Limpia el input de archivo
+        return;
+    }
+
+    // Validación: tamaño máximo
+    if (file.size > TAMANO_MAXIMO) {
+        swal("Error", "El archivo supera el tamaño máximo permitido de 4 MB.", "error");
+        $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
+        $(input).next('.labelpdf').text('Ningún archivo seleccionado');
+        input.value = "";
+        return;
+    }
+
+    // Si todo es válido → mostrar vista previa
+    let objectUrl = URL.createObjectURL(file);
+    $('#verPdf').attr('src', objectUrl);
+    $(input).next('.labelpdf').text(file.name);
 }
+
+//function mostrarPdfSeleccionada(input) {
+//    let file = input.files[0];
+
+//    if (file && file.type === "application/pdf") {
+//        if (file.size <= (4 * 1024 * 1024)) {
+//            let objectUrl = URL.createObjectURL(file);
+//            $('#verPdf').attr('src', objectUrl);
+//            $(input).next('.labelpdf').text(file.name);
+//        } else {
+//            swal("Mensaje", "El archivo seleccionado es demasiado grande, máximo 4 MB.", "warning");
+//            $('#txtpdf').val('');
+//            $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
+//            $(input).next('.labelpdf').text('Ningún archivo seleccionado');
+//        }
+//    } else {
+//        $('#verPdf').attr('src', "/Archivopdf/VeteSinPdf.pdf");
+//        $('#txtpdf').val('');
+//        swal("Mensaje", "Debe seleccionar un archivo PDF válido.", "warning");
+//        $(input).next('.labelpdf').text('Ningún archivo seleccionado');
+//    }
+//}
 
 $('#txtpdf').change(function () {
     mostrarPdfSeleccionada(this);

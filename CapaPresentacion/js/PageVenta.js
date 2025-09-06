@@ -648,6 +648,7 @@ function GenerarPDFprueba() {
 
 $('#btnRegisclie').on('click', function () {
 
+    window.location.href = 'PageClientes.aspx';
     //cargarDetalleVenta(1);
 });
 
