@@ -7,10 +7,12 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Net;
 
 namespace CapaPresentacion
 {
@@ -588,6 +590,106 @@ namespace CapaPresentacion
             return rutaa;
         }
 
+        public bool EnviodeCorreo(string toEmailUser, string subjec, string clave)
+        {
+            try
+            {
+                var from = "susidelta1@gmail.com";
+                var name = "Veterinarias";
+                var smtps = "smtp.gmail.com";
+                var port = 587;
+                var password = "ubnksrseceomigqb";
+
+                var correo = new MailMessage
+                {
+                    From = new MailAddress(from, name)
+                };
+                correo.To.Add(toEmailUser);
+                correo.Subject = subjec;
+
+                string cuerpohtml = $@"
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta name='viewport' content='width=device-width' />
+                        <title>Registro usuario</title> 
+                    </head>
+                    <body style='background-color:#EDF6FF'>
+                        <br />
+                        <br />
+                        <div style='width:400px;border-radius:5px; margin:auto;background-color:#fff;box-shadow:0px 0px 10px  #DEDEDE;padding:20px'>
+                            <table style='width:100%'>
+                                <tr>
+                                    <td align='center' colspan='2'>
+                                      <img src='https://joseluis1989-004-site1.ltempurl.com/recursos/img/gallery/asoc.png' alt='Foto' style='height: 93px; max-width: 90px;'>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align='center' colspan='2'>
+                                        <h2 style='margin:0px;color:#004DAF'>Sistema de Vetasociados</h2>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align='left' colspan='2'>
+                                        <p>Se creó tu usuario. Los detalles de acceso a tu cuenta son:</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h4 style='color:#004DAF;margin:2px'>Usuario:</h4></td>
+                                    <td>{toEmailUser}</td>
+                                </tr>
+                                <tr>
+                                    <td><h4 style='color:#004DAF;margin:2px'>Clave:</h4></td>
+                                    <td>{clave}</td>
+                                </tr>
+                            </table>
+                            <div style='background-color:#FFE1CE;padding:15px;margin-top:15px;margin-bottom:10px'>
+                                <p style='margin:0px;color: #F45E00;'>Le recomendamos cambiar la contraseña una vez inicie sesión.</p>
+                            </div>
+                            <table style='width:100%'>
+                                <tr>
+                                    <td><p>Para iniciar sesión presione el botón</p></td>
+                                </tr>
+                                <tr>
+                                    <td align='center'>
+                                        <a href='https://joseluis1989-004-site1.ltempurl.com/Login.aspx' style='background-color: #004DAF; color: white; padding: 10px 10px; border: none; border-radius: 5px; text-decoration:none;'>
+                                            Iniciar Sesión
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                        <br />
+                    </body>
+                    </html>";
+
+                correo.Body = cuerpohtml;
+                correo.IsBodyHtml = true;
+                correo.Priority = MailPriority.Normal;
+
+                using (var smtp = new SmtpClient
+                {
+                    Host = smtps,
+                    Port = port,
+                    Credentials = new NetworkCredential(from, password),
+                    EnableSsl = true
+                })
+                {
+                    smtp.Send(correo);
+                }
+
+                return true;
+            }
+            catch (SmtpException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public bool EnviarMensaje(string numero, string mensaje)
         {
             try

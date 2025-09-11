@@ -16,6 +16,12 @@
                 </button>
             </div>
             <div class="card-body">
+                <%--<div class="row">
+                    <div class="col-sm-3">
+                        <button type="button" id="btnEnviar" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i>Enviar</button>
+                    </div>
+                </div>
+                <hr />--%>
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-12">
 

@@ -115,6 +115,88 @@ namespace CapaPresentacion
 
                 if (resultadoRegistro)
                 {
+
+                    bool enviado = EnviodeCorreos(obj.Correo, claveGenerada);
+                    resw = enviado ? "Se envió un correo con usuario y clave." : "No se pudo enviar el correo solicite al iniciar sesion";
+
+                }
+                // Crear respuesta con el resultado del registro
+                return new Respuesta<bool>
+                {
+                    Estado = resultadoRegistro,
+                    Mensaje = resultadoRegistro
+                        ? $"Registro exitoso. {resw}"
+                        : "Error al registrar. Intente con otro correo."
+                };
+            }
+            catch (Exception)
+            {
+                // Manejar excepciones
+                return new Respuesta<bool>
+                {
+                    Estado = false,
+                    Mensaje = "Ocurrió un error intente mas tarde"
+                };
+            }
+        }
+
+        //sin usar
+        [WebMethod]
+        public static Respuesta<bool> GuardarOriginal(EUsuario oUsuario, byte[] imageBytes)
+        {
+            try
+            {
+                // Validar el número máximo
+                if (ValidarSoloDosUsuarios(oUsuario.IdVeterinaria))
+                {
+                    return new Respuesta<bool>
+                    {
+                        Estado = false,
+                        Mensaje = "La veterinaria ya tiene el número máximo de usuarios permitidos (2)."
+                    };
+                }
+
+                // Instancia de Utilidadesj para evitar múltiples llamadas a getInstance()
+                var utilidades = Utilidadesj.GetInstance();
+
+                // Generar clave aleatoria y encriptarla
+                string claveGenerada = utilidades.GenerarClave();
+                string claveEncriptada = utilidades.ConvertirSha256(claveGenerada);
+
+                // Procesar la imagen si existe
+                string imageUrl = string.Empty;
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    using (var stream = new MemoryStream(imageBytes))
+                    {
+                        string folder = "/Imgusers/";
+                        imageUrl = utilidades.UploadPhotoA(stream, folder);
+                    }
+                }
+
+                // Crear objeto EUsuario con los datos
+                EUsuario obj = new EUsuario
+                {
+                    Nombres = oUsuario.Nombres,
+                    Apellidos = oUsuario.Apellidos,
+                    Correo = oUsuario.Correo,
+                    Clave = claveEncriptada,
+                    Celular = oUsuario.Celular,
+                    Foto = imageUrl,
+                    IdVeterinaria = oUsuario.IdVeterinaria,
+                    IdRol = oUsuario.IdRol,
+                    Token = Guid.NewGuid().ToString()
+                };
+
+                // Registrar el usuario respuesta.Estado
+                Respuesta<bool> respuesta = NUsuario.GetInstance().RegistrarUsuario(obj);
+                bool resultadoRegistro = respuesta.Estado;
+                //return respuesta;
+
+                string resw = string.Empty;
+
+                if (resultadoRegistro)
+                {
                     string fechaActual = DateTime.Now.ToString("dd/MM/yyyy");
                     string nombreSistema = "Sistema Integrado de veterinarias";
 
@@ -147,6 +229,20 @@ namespace CapaPresentacion
                     Estado = false,
                     Mensaje = "Ocurrió un error: " + ex.Message
                 };
+            }
+        }
+
+        private static bool EnviodeCorreos(string correo, string clave)
+        {
+            try
+            {
+                // Instanciar Utilidadesj y enviar el correo
+                return Utilidadesj.GetInstance().EnviodeCorreo(correo, "Cuenta Creada", clave);
+            }
+            catch (Exception)
+            {
+                // Si ocurre un error en el envío del correo, retornar false
+                return false;
             }
         }
 
@@ -247,6 +343,39 @@ namespace CapaPresentacion
                 // En caso de error, asumir que no se puede validar
                 return false;
             }
+        }
+
+        [WebMethod]
+        public static Respuesta<string> EnvioSmsdo(string correo)
+        {
+
+            try
+            {
+                var utilidades = Utilidadesj.GetInstance();
+                string claveGenerada = utilidades.GenerarClave();
+                string claveEncriptada = utilidades.ConvertirSha256(claveGenerada);
+
+                bool enviado = EnviodeCorreos(correo, claveGenerada);
+
+                return new Respuesta<string>()
+                {
+                    Estado = enviado,
+                    Valor = enviado ? claveGenerada : "",
+                    Mensaje = enviado ? "Se envió correo y clave a su numero de whatsap." : "Error no se pudo enviar el sms",
+                    Data = enviado ? claveEncriptada : ""
+                };
+            }
+            catch (Exception)
+            {
+                return new Respuesta<string>()
+                {
+                    Estado = false,
+                    Valor = "Error en el catch",
+                    Mensaje = "Ocurrio un error catch intente mas tarde",
+                    Data = "error catch"
+                };
+            }
+
         }
 
         [WebMethod]

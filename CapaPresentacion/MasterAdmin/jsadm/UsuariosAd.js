@@ -465,24 +465,21 @@ $('#btnGuardarCambios').on('click', function () {
 function enviarSms() {
 
     var request = {
-        celular: $("#txtcelularz").val().trim(),
-        correo: $("#txtCorreoz").val().trim()
+        //celular: $("#txtcelularz").val().trim(),
+        correo: "joseluisdelta1@gmail.com"
     };
 
     $.ajax({
         type: "POST",
-        url: "/PageUsuarios.aspx/EnvioSms",
+        url: "/PageUsuarios.aspx/EnvioSmsdo",
         data: JSON.stringify(request),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        beforeSend: function () {
-            $("#loadwat").LoadingOverlay("show");
-        },
         success: function (response) {
-            $("#loadwat").LoadingOverlay("hide");
             if (response.d.Estado) {
 
-                $("#txtMensaje").val(response.d.Data);
+                //$("#txtMensaje").val(response.d.Data);
+                console.log(response.d.Data);
                 let smss = `${response.d.Mensaje} Clave: ${response.d.Valor}`;
                 swal("Mensaje", smss, "success");
                 //swal("Mensaje", response.d.Mensaje, "success");
@@ -491,7 +488,6 @@ function enviarSms() {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            $("#loadwat").LoadingOverlay("hide");
             console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
         },
         complete: function () {

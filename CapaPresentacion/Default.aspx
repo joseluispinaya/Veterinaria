@@ -43,7 +43,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="recursos/img/logo/logo.png" alt="">
+                    <img src="recursos/img/logo/logoali.png" alt="">
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                         <!-- Logo -->
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
-                                <a href="#"><img src="recursos/img/logo/logo.png" alt=""></a>
+                                <a href="#"><img src="recursos/img/logo/logoali.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10">
@@ -67,14 +67,14 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav> 
                                         <ul id="navigation">
-                                            <li><a href="#">Inicio</a></li>
+                                            <li><a href="Default.aspx">Inicio</a></li>
                                             <li><a href="Login.aspx">Iniciar sesion</a></li>
                                         </ul>
                                     </nav>
                                 </div>
-                                <div class="header-right-btn f-right d-none d-lg-block ml-30">
+                                <%--<div class="header-right-btn f-right d-none d-lg-block ml-30">
                                     <a href="#" class="header-btn">Soporte tecnico</a>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>   
                         <!-- Mobile Menu -->
@@ -135,9 +135,9 @@
                 </div>   
             </div>
             <!-- slider Social -->
-            <div class="button-text d-none d-md-block">
+            <%--<div class="button-text d-none d-md-block">
             <span>----</span>
-            </div>
+            </div>--%>
         </div>
         <!-- Slider Area End -->
         <!--? Our Services Start -->
@@ -285,9 +285,9 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder">
                                         <div class="founder-img mb-40">
-                                            <img src="recursos/img/gallery/testi-logo.png" alt="">
-                                            <span>Alison Bautista</span>
-                                            <p>Creadora Responsable</p>
+                                            <img src="recursos/img/gallery/asoc.png" alt="" style="height: 132px; max-width: 130px;">
+                                            <span>VetAsociados</span>
+                                            <p>Creador Responsable</p>
                                         </div>
                                     </div>
                                     <div class="testimonial-top-cap">
@@ -301,13 +301,13 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder">
                                         <div class="founder-img mb-40">
-                                            <img src="recursos/img/gallery/testi-logo.png" alt="">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
+                                            <img src="recursos/img/gallery/asoc.png" alt="" style="height: 132px; max-width: 130px;">
+                                            <span>VetAsociados</span>
+                                            <p>Creador Responsable</p>
                                         </div>
                                     </div>
                                     <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                        <p>“Plataforma para veterinaria. Nuestro sistema te permite gestionar ventas de medicamentos, alimentos y accesorios para mascotas, además de llevar un control del historial clínico de cada paciente.”</p>
                                     </div>
                                 </div>
                             </div>
@@ -317,13 +317,13 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder">
                                         <div class="founder-img mb-40">
-                                            <img src="recursos/img/gallery/testi-logo.png" alt="">
-                                            <span>Margaret Lawson</span>
-                                            <p>Creative Director</p>
+                                            <img src="recursos/img/gallery/asoc.png" alt="" style="height: 132px; max-width: 130px;">
+                                            <span>VetAsociados</span>
+                                            <p>Creador Responsable</p>
                                         </div>
                                     </div>
                                     <div class="testimonial-top-cap">
-                                        <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                        <p>“Plataforma para veterinaria. Nuestro sistema te permite gestionar ventas de medicamentos, alimentos y accesorios para mascotas, además de llevar un control del historial clínico de cada paciente.”</p>
                                     </div>
                                 </div>
                             </div>
@@ -340,12 +340,12 @@
                     <div class="col-lg-8">
                         <div class="contact_text text-center">
                             <div class="section_title text-center">
-                                <h3>Any time you can call us!</h3>
-                                <p>Because we know that even the best technology is only as good as the people behind it. 24/7 tech support.</p>
+                                <h3>Encuentra tu veterinaria asociada</h3>
+                                <p>Consulta nuestro directorio de veterinarias y contacta directamente con la que prefieras.</p>
                             </div>
                             <div class="contact_btn d-flex align-items-center justify-content-center">
-                                <a href="#" class="btn white-btn">Contact Us</a>
-                                <p>Or<a href="#"> +880 4664 216</a></p>
+                                <a href="#" class="btn white-btn">Ver directorio</a>
+                                <p>O puede pasar por algunas veterinarias asociadas</p>
                             </div>
                         </div>
                     </div>
@@ -364,33 +364,33 @@
                          <div class="single-footer-caption mb-30">
                               <!-- logo -->
                              <div class="footer-logo mb-25">
-                                 <a href="#"><img src="recursos/img/logo/logo2_footer.png" alt=""></a>
+                                 <a href="#"><img src="recursos/img/logo/logoali2_footer.png" alt=""></a>
                              </div>
                              <div class="footer-tittle">
                                  <div class="footer-pera">
-                                     <p>Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod tempor elit. </p>
+                                     <p>Plataforma que une veterinarias para mejorar los servicios, apoyar el bienestar animal y el apoyo mutuo entre profesionales.</p>
                                 </div>
                              </div>
                              <!-- social -->
-                             <div class="footer-social">
+                             <%--<div class="footer-social">
                                  <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-square"></i></a>
                                  <a href="#"><i class="fab fa-twitter-square"></i></a>
                                  <a href="#"><i class="fab fa-linkedin"></i></a>
                                  <a href="#"><i class="fab fa-pinterest-square"></i></a>
-                             </div>
+                             </div>--%>
                          </div>
                        </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-5">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Company</h4>
+                                <h4>Asociación</h4>
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Cases</a></li>
-                                    <li><a href="#">  Contact Us</a></li>
+                                    <li><a href="#">Misión</a></li>
+                                    <li><a href="#">Visión</a></li>
+                                    <li><a href="#">Compromiso etico</a></li>
+                                    <li><a href="#">Apoyo entre profesionales</a></li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -398,13 +398,11 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Services</h4>
+                                <h4>¿Por qué elegirnos?</h4>
                                 <ul>
-                                    <li><a href="#">Commercial Cleaning</a></li>
-                                    <li><a href="#">Office Cleaning</a></li>
-                                    <li><a href="#">Building Cleaning</a></li>
-                                    <li><a href="#">Floor Cleaning</a></li>
-                                    <li><a href="#">Apartment Cleaning</a></li>
+                                    <li><a href="#">Plataforma amigable y fácil de usar</a></li>
+                                    <li><a href="#">Consulta rápida con nuestro Chatbot inteligente</a></li>
+                                    <li><a href="#">Seguridad y confidencialidad</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -412,11 +410,11 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Get in Touch</h4>
+                                <h4>Sobre nosotros</h4>
                                 <ul>
-                                 <li><a href="#">152-515-6565</a></li>
-                                 <li><a href="#"> Demomail@gmail.com</a></li>
-                                 <li><a href="#">New Orleans, USA</a></li>
+                                 <li><a href="#">Plataforma oficial de veterinarias de Riberalta</a></li>
+                                 <li><a href="#"> Comprometidos con el bienestar animal</a></li>
+                                 <li><a href="#">Ubicados en Riberalta-Beni, Bolivia</a></li>
                              </ul>
                             </div>
                         </div>
@@ -432,7 +430,7 @@
                          <div class="col-xl-12 ">
                              <div class="footer-copy-right text-center">
                                  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Esta pagina fue hecho <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Vivi</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                              </div>
                          </div>
@@ -453,12 +451,12 @@
     <!-- Chatbot -->
         <div class="chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
             <div class="chat-header">
-                Chatbot de Adopción de Mascotas
+                Consulta con el Chatbot
                 <button id="closeChat">✖</button>
             </div>
             <div class="chat-messages" id="chat-messages">
                 <div class="message bot-message visible">
-                    ¡Hola! ¿En qué puedo ayudarte hoy?
+                    ¡Bienvenido! ¿En qué puedo ayudarte?
                 </div>
             </div>
             <div class="chat-input">

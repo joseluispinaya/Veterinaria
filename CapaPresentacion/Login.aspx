@@ -23,7 +23,7 @@
 
     <body>
 
-        <!-- Begin page -->
+        <!-- Begin page value="803665" value="pepito@yopmail.com" -->
         <div class="accountbg"></div>
         <div class="wrapper-page">
             <div class="card card-pages">
@@ -38,13 +38,13 @@
 
                         <div class="form-group">
                             <div class="col-12">
-                                <input class="form-control" id="username" type="text" value="pepito@yopmail.com" placeholder="Ingrese Correro">
+                                <input class="form-control" id="username" type="text" placeholder="Ingrese Correro">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-12">
-                                <input class="form-control" id="password" type="password" value="803665" placeholder="Contraseña">
+                                <input class="form-control" id="password" type="password" placeholder="Contraseña">
                             </div>
                         </div>
 
@@ -56,10 +56,10 @@
 
                         <div class="form-group row m-t-30 m-b-0">
                             <div class="col-sm-7">
-                                <a href="#" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</a>
+                                <a href="Default.aspx" class="text-muted"><i class="fa fa-lock m-r-5"></i> Volver a Inicio</a>
                             </div>
                             <div class="col-sm-5 text-right">
-                                <a href="#" class="text-muted">Create an account</a>
+                                <%--<a href="#" class="text-muted">Create an account</a>--%>
                             </div>
                         </div>
                     </form>
