@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/HomePage.Master" AutoEventWireup="true" CodeBehind="PageVenta.aspx.cs" Inherits="CapaPresentacion.PageVenta" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css"/>
     <style>
         .custom-style-form .custom-style-form-control {
             height: calc(1.3em + .3rem + 2px) !important;
@@ -99,18 +100,24 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="input-group custom-style-input-group">
+                        <div class="form-group">
+                            <label for="btngiapage" class="invisible">Agregar</label>
+                            <button type="button" id="btngiapage" class="btn btn-xs btn-success">
+                                <i class="fas fa-question-circle"></i> Guia de apoyo
+                            </button>
+                        </div>
+                        <%--<div class="input-group custom-style-input-group">
                             <div class="input-group-prepend">
                                 <label class="input-group-text custom-style-label" for="txtfechaafor" style="font-size: .875rem;">Fecha Formato</label>
                             </div>
                             <input id="txtfechaafor" readonly type="text" class="form-control custom-style-form-control">
-                        </div>
+                        </div>--%>
                     </div>
                 </div>                
                 <hr />
                 <div class="row">
                     <div class="col-lg-5">
-                        <div class="card">
+                        <div class="card" id="cardcli1">
                             <div class="card-body" id="loadClib">
                                 <input id="txtIdClienVen" type="hidden" value="0" />
                                 <h5 class="m-0">Detalle cliente</h5>
@@ -161,7 +168,7 @@
 
                     <!-- Detalle Producto SIN ESTILOS -->
                     <div class="col-lg-7">
-                        <div class="card">
+                        <div class="card" id="cardproduc2">
                             <div class="card-body">
                                 <h5 class="m-0">Buscar Producto</h5>
                                 <input id="txtIdProductoVen" type="hidden" value="0" />
@@ -242,7 +249,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" id="cardtotal3">
                         <h5 class="m-t-0 m-b-15">Detalle Venta</h5>
                         <div class="input-group custom-style-input-group mb-2">
                             <div class="input-group-prepend">
@@ -385,6 +392,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>--%>
     <%--<script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>--%>
+
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
     <script src="https://unpkg.com/jspdf-invoice-template@1.3.1/dist/index.js"></script>
     <script src="js/PageVenta.js" type="text/javascript"></script>
 </asp:Content>

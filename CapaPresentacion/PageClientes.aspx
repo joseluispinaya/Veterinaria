@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12">
 
-                            <table id="tbPropiet" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
+                            <table id="tbPropiet" class="table table-sm table-striped table-bordered nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>

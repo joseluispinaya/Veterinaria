@@ -64,11 +64,10 @@ function listaUsuarios() {
                 }
             },
             {
-                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
-                    '<button class="btn btn-danger btn-eliminar btn-sm"><i class="fas fa-trash-alt"></i></button>',
+                "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>',
                 "orderable": false,
                 "searchable": false,
-                "width": "80px"
+                "width": "40px"
             }
         ],
         "order": [[0, "desc"]],
@@ -341,6 +340,88 @@ function registerDataUser() {
     }
 }
 
+function sendDataToActualizar(request) {
+    $.ajax({
+        type: "POST",
+        url: "/PageUsuarios.aspx/Actualizar",
+        data: JSON.stringify(request),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        beforeSend: function () {
+            $(".modal-content").LoadingOverlay("show");
+        },
+        success: function (response) {
+            $(".modal-content").LoadingOverlay("hide");
+            if (response.d.Estado) {
+                listaUsuarios();
+                $('#modalregusua').modal('hide');
+
+                swal("Mensaje", response.d.Mensaje, "success");
+            } else {
+                swal("Mensaje", response.d.Mensaje, "warning");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $(".modal-content").LoadingOverlay("hide");
+            console.log(xhr.status + " \n" + xhr.responseText, "\n" + thrownError);
+        },
+        complete: function () {
+            // Rehabilitar el botón después de que la llamada AJAX se complete (éxito o error)
+            $('#btnGuardarCambios').prop('disabled', false);
+        }
+    });
+}
+
+function actualizarDataUser() {
+    var fileInput = document.getElementById('txtFotoUr');
+    var file = fileInput.files[0];
+
+    const modelo = structuredClone(MODELO_BASE);
+    modelo["IdUsuario"] = parseInt($("#txtIdUsuario").val());
+    modelo["Nombres"] = $("#txtNombres").val();
+    modelo["Apellidos"] = $("#txtApellidos").val();
+    modelo["Correo"] = $("#txtCorreo").val();
+    modelo["Celular"] = $("#txtCelular").val();
+    modelo["IdVeterinaria"] = $("#cboVeter").val();
+    modelo["IdRol"] = $("#cboRol").val();
+    modelo["Activo"] = ($("#cboEstado").val() == "1" ? true : false);
+
+    if (file) {
+
+        var maxSize = 2 * 1024 * 1024; // 2 MB en bytes
+        if (file.size > maxSize) {
+            swal("Mensaje", "La imagen seleccionada es demasiado grande max 1.5 Mb.", "warning");
+            // Rehabilitar el botón si hay un error de validación
+            $('#btnGuardarCambios').prop('disabled', false);
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var arrayBuffer = e.target.result;
+            var bytes = new Uint8Array(arrayBuffer);
+
+            var request = {
+                oUsuario: modelo,
+                imageBytes: Array.from(bytes)
+            };
+
+            sendDataToActualizar(request);
+        };
+
+        reader.readAsArrayBuffer(file);
+    } else {
+        // Si no se selecciona ningún archivo, envía un valor nulo o vacío para imageBytes
+        var request = {
+            oUsuario: modelo,
+            imageBytes: null // o cualquier otro valor que indique que no se envió ningún archivo
+        };
+
+        sendDataToActualizar(request);
+    }
+}
+
 function esCorreoValido(correo) {
     // Expresión regular mejorada para validar correos electrónicos
     var emailRegex = /^[a-zA-Z0-9._%+-ñÑáéíóúÁÉÍÓÚ]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -376,8 +457,8 @@ $('#btnGuardarCambios').on('click', function () {
     if (parseInt($("#txtIdUsuario").val()) === 0) {
         registerDataUser();
     } else {
-        swal("Mensaje", "Falta para Actualizar personal.", "warning")
-        //editarDataAjaxU();
+        //swal("Mensaje", "Falta para Actualizar personal.", "warning")
+        actualizarDataUser();
     }
 })
 
@@ -420,10 +501,9 @@ function enviarSms() {
     });
 }
 
-$('#btnEnviar').on('click', function () {
+//$('#btnEnviar').on('click', function () {
 
-    // Deshabilitar el botón para evitar múltiples envíos
-    $('#btnEnviar').prop('disabled', true);
+//    $('#btnEnviar').prop('disabled', true);
 
-    enviarSms();
-})
+//    enviarSms();
+//})

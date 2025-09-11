@@ -43,48 +43,48 @@
     </div>
 </div>
 
-        <div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header bg-primary">
-                <h3 class="card-title m-0"><i class="fas fa-notes-medical"></i> Lista de Historial Clinico</h3>
-            </div>
-            <div class="card-body" id="loadwat">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-row">
-                            <div class="form-group col-sm-6">
-                                <label for="txtcelularz">Nro celular</label>
-                                <input type="text" class="form-control input-sm" id="txtcelularz" name="celular">
+    <%--<div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title m-0"><i class="fas fa-notes-medical"></i>Lista de Historial Clinico</h3>
+                </div>
+                <div class="card-body" id="loadwat">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="txtcelularz">Nro celular</label>
+                                    <input type="text" class="form-control input-sm" id="txtcelularz" name="celular">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="txtCorreoz">Correo</label>
+                                    <input type="text" class="form-control input-sm" id="txtCorreoz" name="Correo">
+                                </div>
                             </div>
-                            <div class="form-group col-sm-6">
-                                <label for="txtCorreoz">Correo</label>
-                                <input type="text" class="form-control input-sm" id="txtCorreoz" name="Correo">
+
+                            <div class="form-group text-center">
+                                <button type="button" id="btnEnviar" class="btn btn-sm btn-success">
+                                    <i class="fas fa-pencil-alt"></i>Enviar
+                                </button>
+
+                                <button type="button" id="btnNuect" class="btn btn-sm btn-danger m-l-10">
+                                    <i class="fas fa-edit"></i>Nuevo
+                                </button>
                             </div>
                         </div>
 
-                        <div class="form-group text-center">
-                            <button type="button" id="btnEnviar" class="btn btn-sm btn-success">
-                                <i class="fas fa-pencil-alt"></i> Enviar
-                            </button>
-
-                            <button type="button" id="btnNuect" class="btn btn-sm btn-danger m-l-10">
-                                <i class="fas fa-edit"></i> Nuevo
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="txtMensaje">Mensaje</label>
-                            <textarea class="form-control" rows="3" id="txtMensaje"></textarea>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="txtMensaje">Mensaje</label>
+                                <textarea class="form-control" rows="3" id="txtMensaje"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>--%>
 
 <div class="modal fade bs-example-modal-lg" id="modalregusua" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

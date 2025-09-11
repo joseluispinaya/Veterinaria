@@ -23,12 +23,32 @@ $(document).ready(function () {
 
     $("#txtproductocantidad").val("0");
     $("#txtfechaa").val(ObtenerFechaVenta());
-    $("#txtfechaafor").val(ObtenerFechaVentaIa());
+    //$("#txtfechaafor").val(ObtenerFechaVentaIa());
 
     const datosUserv = JSON.parse(sessionStorage.getItem('usuarioSt'));
     $("#txtIdVeteriVe").val(datosUserv.IdVeterinaria);
     $("#txtnomvete").val(datosUserv.Veterinaria.NombreVeterinaria);
     $("#txtuserr").val(`${datosUserv.Nombres} ${datosUserv.Apellidos}`);
+})
+
+function ventaGuia() {
+    const driver = window.driver.js.driver;
+
+    const driverObj = driver({
+        showProgress: true,
+        steps: [
+            { element: '#cardcli1', popover: { title: 'Detalle Cliente', description: 'En esta seccion se debe buscar un cliente para la venta' } },
+            { element: '#cardproduc2', popover: { title: 'Buscar Producto', description: 'En esta seccion se debe buscar el producto para la venta' } },
+            { element: '#cardtotal3', popover: { title: 'Detalle Venta', description: 'Seccion que muestra el detalle total de los productos como el monto total' } },
+        ]
+    });
+
+    driverObj.drive();
+
+}
+
+$('#btngiapage').on('click', function () {
+    ventaGuia();
 })
 
 function listaProductosVenta() {

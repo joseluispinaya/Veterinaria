@@ -72,6 +72,50 @@ namespace CapaDatos
             }
         }
 
+        public Respuesta<bool> EditarMascota(EMascota oMascota)
+        {
+            try
+            {
+                bool respuesta = false;
+                using (SqlConnection con = ConexionBD.GetInstance().ConexionDB())
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_ModificarMascota", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@IdMascota", oMascota.IdMascota);
+                        cmd.Parameters.AddWithValue("@Nombre", oMascota.Nombre);
+                        cmd.Parameters.AddWithValue("@ImagenMascota", oMascota.ImagenMascota);
+                        cmd.Parameters.AddWithValue("@Raza", oMascota.Raza);
+                        cmd.Parameters.AddWithValue("@Genero", oMascota.Genero);
+                        cmd.Parameters.AddWithValue("@IdTipoMascota", oMascota.IdTipoMascota);
+                        cmd.Parameters.AddWithValue("@FechaNacimiento", oMascota.VFechaNacimiento);
+                        cmd.Parameters.AddWithValue("@Comentario", oMascota.Comentario);
+                        cmd.Parameters.AddWithValue("@Activo", oMascota.Activo);
+
+                        SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(outputParam);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        respuesta = Convert.ToBoolean(outputParam.Value);
+                    }
+                }
+                return new Respuesta<bool>
+                {
+                    Estado = respuesta,
+                    Mensaje = respuesta ? "Se actualizo correctamente" : "Error al actualizar intente mas tarde"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Respuesta<bool> { Estado = false, Mensaje = "Ocurrió un error: " + ex.Message };
+            }
+        }
+
         public Respuesta<EMascota> MascotaDetalleHistorial(int IdMascota)
         {
             try

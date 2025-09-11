@@ -136,7 +136,7 @@
             </div>
             <!-- slider Social -->
             <div class="button-text d-none d-md-block">
-            <span>Screll</span>
+            <span>----</span>
             </div>
         </div>
         <!-- Slider Area End -->

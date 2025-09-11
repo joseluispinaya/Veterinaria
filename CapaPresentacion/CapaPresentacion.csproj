@@ -404,6 +404,7 @@
     <Content Include="js\PageDetalleCliente.js" />
     <Content Include="js\PageDetalleMascota.js" />
     <Content Include="js\PageListaProducto.js" />
+    <Content Include="js\PageMascotasadd.js" />
     <Content Include="js\PageServicios.js" />
     <Content Include="js\PageUsuarios.js" />
     <Content Include="js\PageVenta.js" />
@@ -421,6 +422,7 @@
     <Content Include="PageDetalleCliente.aspx" />
     <Content Include="PageDetalleMascota.aspx" />
     <Content Include="PageListaProducto.aspx" />
+    <Content Include="PageMascotasadd.aspx" />
     <Content Include="PageServicios.aspx" />
     <Content Include="PageUsuarios.aspx" />
     <Content Include="PageVenta.aspx" />
@@ -662,6 +664,13 @@
     </Compile>
     <Compile Include="PageListaProducto.aspx.designer.cs">
       <DependentUpon>PageListaProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageMascotasadd.aspx.cs">
+      <DependentUpon>PageMascotasadd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageMascotasadd.aspx.designer.cs">
+      <DependentUpon>PageMascotasadd.aspx</DependentUpon>
     </Compile>
     <Compile Include="PageServicios.aspx.cs">
       <DependentUpon>PageServicios.aspx</DependentUpon>

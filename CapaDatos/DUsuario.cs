@@ -93,7 +93,7 @@ namespace CapaDatos
                         cmd.Parameters.AddWithValue("@Foto", oUsuario.Foto);
                         cmd.Parameters.AddWithValue("@IdVeterinaria", oUsuario.IdVeterinaria);
                         cmd.Parameters.AddWithValue("@IdRol", oUsuario.IdRol);
-                        cmd.Parameters.AddWithValue("@Token", oUsuario.Token);
+                        //cmd.Parameters.AddWithValue("@Token", oUsuario.Token);
                         cmd.Parameters.AddWithValue("@Activo", oUsuario.Activo);
 
                         SqlParameter outputParam = new SqlParameter("@Resultado", SqlDbType.Bit)

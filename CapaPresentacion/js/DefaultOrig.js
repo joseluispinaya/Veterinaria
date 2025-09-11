@@ -193,10 +193,27 @@ $('#closeChat').on('click', function () {
     $('#chatButton').show();
 });
 
+function generadorUid() {
+    let a = Date.now().toString(30);        // siempre consistente
+    let b = Math.random().toString(30).slice(2, 8); // 6 caracteres fijos
+    return a + b;
+
+    //swal("Hecho", `Se genero el id: ${sessionId}.`, "success");
+    //return dat + ran;
+}
+
 function enviarPrompt() {
 
     const userInput = document.getElementById("user-input").value.trim();
     if (userInput === "") return;
+
+
+    // Verificar o generar sessionId
+    let sessionId = sessionStorage.getItem('sessionId');
+    if (!sessionId) {
+        sessionId = generadorUid();
+        sessionStorage.setItem('sessionId', sessionId);
+    }
 
     // Agregar el mensaje del usuario al chat
     agregarMensaje(userInput, "user-message");
@@ -207,7 +224,8 @@ function enviarPrompt() {
     document.getElementById("btnenviar").disabled = true;
 
     var request = {
-        prompt: userInput
+        session: sessionId,
+        pregunta: userInput
     };
 
     $.ajax({

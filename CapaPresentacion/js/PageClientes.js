@@ -54,7 +54,7 @@ function listaClientes() {
                         return '<span class="badge badge-danger">No Activo</span>';
                 }
             },
-            { "data": "NumeroMascotas" },
+            { "data": "NumeroMascotas", "className": "text-center" },
             {
                 "defaultContent": '<button class="btn btn-primary btn-editar btn-sm mr-2"><i class="fas fa-pencil-alt"></i></button>' +
                     '<button class="btn btn-info btn-detalle btn-sm"><i class="fas fa-address-book"></i></button>',

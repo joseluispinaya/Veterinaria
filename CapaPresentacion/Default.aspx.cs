@@ -42,19 +42,19 @@ namespace CapaPresentacion
         
 
         [WebMethod]
-        public static string ChatBotVeterinaria(string prompt)
+        public static string ChatBotVeterinaria(string session, string pregunta)
         {
 
             try
             {
-                if (string.IsNullOrEmpty(prompt))
+                if (string.IsNullOrEmpty(pregunta))
                 {
                     return "Debe ingresar una pregunta.";
                 }
-                var respChatbot = Utilidadesj.GetInstance().RespuestaChaBotVeterinaria(prompt);
+                //var respChatbot = Utilidadesj.GetInstance().RespuestaChaBotVeterinaria(prompt);
+                var respChatbot = Utilidadesj.GetInstance().RespuestaModeloIa(session, pregunta);
 
                 return respChatbot;
-
 
             }
             catch (Exception)
